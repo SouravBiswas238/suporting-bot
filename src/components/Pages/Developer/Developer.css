@@ -1,0 +1,26 @@
+.card-Shadow {
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+}
+
+.card-button-primary {
+  background-color: #02d8e7;
+  border: 0.1rem solid #02d8e7;
+  border-radius: 0.2rem;
+  color: #231e39;
+  font-weight: 600;
+  padding: 0.3rem 0.9rem;
+  margin-top: 1rem;
+  outline: none;
+  transition: 0.2s ease-in-out;
+}
+.card-button-primary:hover {
+  border: 0.1rem solid #333;
+}
+
+/* card grid style  */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-gap: 1.2rem;
+}
