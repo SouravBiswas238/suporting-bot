@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import {
-  useSignInWithEmailAndPassword,
-  useSignInWithGoogle,
-  useAuthState,
-} from 'react-firebase-hooks/auth';
+
 import { useForm } from 'react-hook-form';
-import auth from './../../../firebase.init';
 import Loading from './../../Shared/Loading';
 import useToken from './../../../hooks/useToken';
 import googleLogo from '../../../images/google.png';
-import { UserStore } from '../../../stateManagement/UserContext/UserContextStore';
+// import { UserStore } from '../../../stateManagement/UserContext/UserContextStore';
 import Lottie from 'lottie-web';
 import loginLottie from './login2.json';
 // import { AiFillEye } from 'react-icons/ai'
@@ -34,14 +29,10 @@ const Login = () => {
     // More logic goes here
   }, []);
 
-  const [globalUser] = useAuthState(auth);
-  const [passwordError, setPasswordError] = useState('');
   const location = useLocation();
   const from = location?.state?.from?.pathname || '/';
-  let currentUser;
-  let username = '';
-  const currentUserinfo = useContext(UserStore)?.user;
 
+  let loading = false;
   // React hook forms element
   // React hook forms element
   const {
@@ -51,53 +42,24 @@ const Login = () => {
   } = useForm();
   // Error State
   const navigate = useNavigate();
-  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+
 
   // globalUser is [user]= useAuthState(auth)
   const [showPassword, setShowPassword] = useState(false);
   const tokenInLStorage = localStorage.getItem('accessToken');
 
-  if (globalUser) {
-    currentUser = {
-      email: globalUser?.email,
-      username: username,
-      accountType: tokenInLStorage,
-    };
-  }
 
-  const token = useToken(currentUser);
-
-  useEffect(() => {
-    if (!globalUser && (tokenInLStorage + '').length > 4) {
-      localStorage.removeItem('accessToken');
-    } else {
-      if ((tokenInLStorage + '').length > 4) {
-        navigate(from, { replace: true } || '/');
-      }
-    }
-  }, [
-    token,
-    navigate,
-    globalUser,
-    from,
-    tokenInLStorage,
-    currentUserinfo.accountType,
-  ]);
-
-  if (loading || gLoading) {
-    return <Loading></Loading>;
-  }
+  // if (loading || gLoading) {
+  //   return <Loading></Loading>;
+  // }
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    signInWithEmailAndPassword(email, password);
   };
 
   return (
     <div className="min-h-[100vh] py-10 dark:bg-[#0D1425] bg-[#F3F3F3]">
-      <div className="conatiner container max-w-[1349px] mx-auto">
+      <div className=" container max-w-[1349px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="card flex-shrink-0 w-full order-last md:order-first">
             <div className="card-body">
@@ -192,7 +154,7 @@ const Login = () => {
                 </div>
 
                 {/* Error Shows here */}
-                <div>
+                {/* <div>
                   {passwordError && (
                     <p className="text-red-500">{passwordError}</p>
                   )}
@@ -206,24 +168,15 @@ const Login = () => {
                       {error?.message?.slice(9)}
                     </p>
                   )}
-                </div>
-                {/* <div className="form-control mt-6">
-                                    <p className={`hover:underline`}><Link to="/register">New here? Create an account</Link></p>
-                                    {
-                                        loading
-                                            ?
-                                            <button type='submit' className="btn btn-primary font-bold text-lg text-white loading uppercase">Login</button>
-                                            :
-                                            <button type='submit' className="btn btn-primary font-bold text-lg text-white  uppercase">Login</button>
-                                    }
-                                </div> */}
+                </div> */}
+
+
               </form>
               <div className="flex flex-col w-full dark:text-[#8C9BB6] border-opacity-50 mt-4">
                 <div className="divider dark:text-[#8C9BB6]">OR</div>
               </div>
               <div className="form-control mt-4 ">
                 <button
-                  onClick={() => signInWithGoogle()}
                   className=" py-2 flex justify-center items-center input-border dark:border-0 font-semibold bg-transparent text-[#334155] dark:text-[#8C9BB6] dark:bg-[#1E293B] w-full "
                 >
                   <img src={googleLogo} alt="" />

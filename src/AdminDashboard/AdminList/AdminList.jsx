@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { serverLink } from '../../utilities/links';
 import AdminRow from './AdminRow';
+import axios from 'axios';
 
 const AdminList = () => {
   const [developers, setDevelopers] = useState([]);

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import navLogo from '../../../images/logo.png';
+// import navLogo from '../../../images/logo.png';
 import './Navbar.css'
-import { useAuthState } from 'react-firebase-hooks/auth';
-import auth from '../../../firebase.init';
-import { signOut } from 'firebase/auth';
+
 
 import { HiLightBulb } from "react-icons/hi";
 import { MdDarkMode } from "react-icons/md";
@@ -18,8 +16,6 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { ImExit } from "react-icons/im";
 import { CgProfile } from "react-icons/cg";
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserStore } from '../../../stateManagement/UserContext/UserContextStore';
 import useDarkMode from '../../../hooks/useDarkMode';
 
 const Navbar = () => {
@@ -28,19 +24,17 @@ const Navbar = () => {
     const [navSwitch, setNavSwitch] = useState(false);
     const [userSwitch, setUserSwitch] = useState(false);
     // user information  code {sourav}
-    const userStore = useContext(UserStore);
-    const currentUser = userStore.user;
-    const [user] = useAuthState(auth);
+
     const handleSignOut = () => {
         localStorage.removeItem('accessToken')
-        signOut(auth);
         // closed user information menu bar
         setUserSwitch(false)
     }
 
     //user information
     // const userStore = useContext(UserStore)?.user;
-
+    let user = false;
+    let currentUser = false;
     const closedNavbarAll = () => {
         setUserSwitch(false) //main navbar
         setNavSwitch(false)  // user information navbar
@@ -65,7 +59,7 @@ const Navbar = () => {
 
 
                         <Link to='/'>
-                            <span className='ml-1 text-[#0D1425] dark:text-white'>Recruit<span className='dark:text-[#38BDF8] text-[#3878DF]'>Hub</span></span>
+                            <span className='ml-1 text-[#0D1425] dark:text-white'>Supporting<span className='dark:text-[#38BDF8] text-[#3878DF]'>Bot</span></span>
                         </Link>
 
                     </div>
@@ -75,15 +69,9 @@ const Navbar = () => {
 
                         <ul className='md:flex bg-[#F3F3F3] dark:bg-[#0C1322] text-gray-900 dark:text-gray-200 border-x-2 border-b-2 md:border-0 border-gray-200 dark:border-gray-700 pl-3 md:pl-0 py-5 md:py-0 w-full md:w-auto'>
 
-                            <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/findJob" className={({ isActive }) => (isActive ? active : deActive)} > <MdOutlineConnectWithoutContact className='md:hidden text-base mr-2' /> Find Job</NavLink> </li>
                             <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/" className={({ isActive }) => (isActive ? active : deActive)} ><AiFillHome className='md:hidden text-base mr-2 ' />Home</NavLink> </li>
-                            <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/freeResource" className={({ isActive }) => (isActive ? active : deActive)} ><BsTools className='md:hidden text-base mr-2' /> Resource</NavLink> </li>
-                            <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/developer" className={({ isActive }) => (isActive ? active : deActive)} > <MdDeveloperMode className='md:hidden text-base mr-2 ' /> Developer</NavLink> </li>
+                            <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/resource" className={({ isActive }) => (isActive ? active : deActive)} ><BsTools className='md:hidden text-base mr-2' /> Resource</NavLink> </li>
                             <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/contactUs" className={({ isActive }) => (isActive ? active : deActive)} > <MdOutlineConnectWithoutContact className='md:hidden text-base mr-2' /> Contact US</NavLink> </li>
-                            {
-                                userStore?.user?.accountType === 'recruiter' &&
-                                <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8]'> <NavLink to="/postJob" className={({ isActive }) => (isActive ? active : deActive)} > <MdOutlineConnectWithoutContact className='md:hidden text-base mr-2' /> Post Job</NavLink> </li>
-                            }
                             <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8]'> <NavLink to="/chat" className={({ isActive }) => (isActive ? active : deActive)} > <MdOutlineConnectWithoutContact className='md:hidden text-base mr-2' /> Chat</NavLink> </li>
 
                             <li onClick={closedNavbarAll} className='mb-4 md:mb-0 dark:text-[#c6c9d8]'> <NavLink to="/aboutUs" className={({ isActive }) => (isActive ? active : deActive)} > <BsInfoCircleFill className='md:hidden text-base mr-2' /> About US</NavLink> </li>
@@ -98,7 +86,6 @@ const Navbar = () => {
                                     <li onClick={closedNavbarAll} className='mb-4 md:mb-0 md:hidden'> <NavLink to="/register" className={({ isActive }) => (isActive ? active : deActive)} > <BsFillFileEarmarkMedicalFill className='md:hidden text-base mr-2' />Register</NavLink> </li>
                                 </>
 
-                                // <li onClick={() => handleSignOut()} className='mb-4 md:mb-0 md:hidden cursor-pointer font-semibold text-lg flex items-center xs:hidden'>  <ImExit className='md:hidden text-base mr-2' />Logout</li>
                             }
 
 

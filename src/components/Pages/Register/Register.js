@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import {
-  useCreateUserWithEmailAndPassword,
-  useSendEmailVerification,
-  useSignInWithGoogle,
-  useUpdateProfile,
-  useAuthState,
-} from 'react-firebase-hooks/auth';
+
 import PasswordStrengthBar from 'react-password-strength-bar';
 import makeId from './SuggestPass';
-import auth from './../../../firebase.init';
-import Loading from './../../Shared/Loading';
-import useToken from './../../../hooks/useToken';
-import { sendEmailVerification } from 'firebase/auth';
-import axios from 'axios';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import googleLogo from '../../../images/google.png';
 import Lottie from 'lottie-web';
 import regisLottie from './lottie1.json';
 import AccountTypePage from './AccountTypePage';
-import { serverLink } from './../../../utilities/links';
 
 const Register = () => {
   // for lottie
@@ -40,10 +28,8 @@ const Register = () => {
     // More logic goes here
   }, []);
   const accType = localStorage.getItem('accountType');
-  const [globalUser] = useAuthState(auth);
   const navigate = useNavigate();
-  const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+
   const {
     register,
     formState: { errors },
@@ -51,80 +37,24 @@ const Register = () => {
   } = useForm();
   const [passwordBar, setPasswordBar] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-  const [sendEmailVerification, sending, verificationerror] =
-    useSendEmailVerification(auth);
+
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showAccType, setShowAccType] = useState(false);
   const [username, setUsername] = useState('');
-  let currentUser;
+  let loading;
 
   //Token
   const onSubmit = async (data) => {
     if (data.password === data.confirmPassword) {
-      setUsername(data.username);
-      await sendEmailVerification(); // Send Verification Email
-      const displayName = data.name;
-      const email = data.email;
-      const password = data.password;
-      await createUserWithEmailAndPassword(email, password); // create user
-      await updateProfile({ displayName }); //Update Display Name
+      console.log(data)
+
     } else {
+      console.log("password not matched")
     }
   };
-  if (globalUser) {
-    currentUser = {
-      email: globalUser?.email,
-      username: username,
-      accountType: localStorage.getItem('accountType'),
-    };
-  }
-  const token = useToken(currentUser);
-  // useEffect(() => {
-  //     if (token) {
 
-  //         // navigate('/');
-  //         //Uncomment Below Section to send email on new user creation
 
-  //         // <SendEmail
-  //         //     user={primaryUser}
-  //         //     subject={"Account Registration"}
-  //         //     text={"You account has been successfully registered in Nissan Parts. Thank you."}
-  //         // ></SendEmail>
-  //     }
-  // }, [token, navigate])
 
-  if (error) {
-    console.log(error);
-  }
-  if (updating || loading || sending || gLoading) {
-    return <Loading />;
-  }
-  const handleUserNameValidation = async (username) => {
-    username !== ''
-      ? await axios
-        .post(`${serverLink}/user/check-username/${username}`)
-        .then((data) => {
-          if (data.data.isAvailable) {
-            setUsernameAvailable(true);
-          } else {
-            setUsernameAvailable(false);
-          }
-        })
-        .then(function (error) {
-          toast.error(error?.message);
-        })
-      : setUsernameAvailable(null);
-  };
-  const handleGoogleSignIn = () => {
-    setShowAccType(true);
-
-    const accountType = localStorage.getItem('accountType');
-    if (accountType.length > 0) {
-      signInWithGoogle();
-    }
-  };
 
   return (
     <div>
@@ -133,6 +63,7 @@ const Register = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className=" ">
               <div className="card flex-shrink-0 w-full order-last md:order-first">
+                {/* form for submit */}
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="card-body">
                     <h1 className="text-[2.5rem] font-bold text-center dark:text-white text-[#334155]">
@@ -141,50 +72,7 @@ const Register = () => {
                       </span>{' '}
                       Registration
                     </h1>
-
-                    {/* userName of user  */}
-                    <div className="form-control mb-">
-                      <label className="label">
-                        <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
-                          Choose a username
-                        </span>
-                      </label>
-                      <input
-                        onBlur={(e) => handleUserNameValidation(e.target.value)}
-                        onKeyUp={(e) =>
-                          handleUserNameValidation(e.target.value)
-                        }
-                        type="text"
-                        placeholder="Your Name"
-                        className="input-customize dark:border-[#0D1425]  
-                                                dark:bg-[#1E293B] dark:text-white dark:outline-0"
-                        {...register('username', { required: true })}
-                      />
-                      {usernameAvailable === true && (
-                        <p className="text-green-500">Username is available</p>
-                      )}
-                      {usernameAvailable === false && (
-                        <p className="text-red-500">
-                          Username is taken! Try another
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Name of user  */}
-                    <div className="form-control mb-">
-                      <label className="label">
-                        <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
-                          Name
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Your Name"
-                        className="input-customize dark:border-[#0D1425]  
-                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
-                        {...register('name', { required: true })}
-                      />
-                    </div>
+                    {/* user email   */}
                     <div className="form-control mb-">
                       <label className="label">
                         <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
@@ -229,7 +117,7 @@ const Register = () => {
                       {/*Confirm Password */}
                       <label className="label">
                         <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
-                          Password
+                          Confirm Password
                         </span>
                       </label>
                       <input
@@ -240,14 +128,13 @@ const Register = () => {
                       <input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Confirm Password"
-                        name="password"
+                        name="confirmPassword"
                         className="input-customize dark:border-[#0D1425]  
                                     dark:bg-[#1E293B] dark:text-white dark:outline-0"
                         {...register('confirmPassword', {
                           required: true,
                           // pattern: /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
                         })}
-                        onChange={(e) => setPasswordBar(e.target.value)}
                       />
 
                       <div className="text-md flex  justify-between mt-4  md:items-center xs:flex-col-reverse">
@@ -297,11 +184,11 @@ const Register = () => {
                         )}
                       </label>
 
-                      {/* <label>
-                                                <Link to="/login" className=" pointer hover:text-primary font-semibold text-xl">Already have an account? Login
-                                                </Link>
-                                            </label> */}
+
                     </div>
+
+
+
                     <div className="mt-4 flex justify-between items-center">
                       {loading ? (
                         <button className="bg-[#0F172A] dark:bg-[#0284C7] font-bold btn-login text-white  uppercase">
@@ -327,7 +214,6 @@ const Register = () => {
 
                     <div className="form-control mt-4 ">
                       <button
-                        onClick={() => signInWithGoogle()}
                         className=" py-2  flex justify-center items-center input-border dark:border-0 font-semibold bg-transparent text-[#334155] dark:text-[#8C9BB6] dark:bg-[#1E293B] w-full "
                       >
                         <img src={googleLogo} alt="" />
@@ -338,20 +224,12 @@ const Register = () => {
                     </div>
                   </div>
                 </form>
+
               </div>
-              <div id="accType">
-                {showAccType && (
-                  <>
-                    {navigate(`/register/#accType`)}
-                    <AccountTypePage
-                      showAccType={showAccType}
-                      setShowAccType={setShowAccType}
-                      type={'googleSignIn'}
-                    />
-                  </>
-                )}
-              </div>
+
             </div>
+
+            {/* right side animation */}
 
             <div className="flex justify-center items-center">
               <div className="w-fit mx-auto">

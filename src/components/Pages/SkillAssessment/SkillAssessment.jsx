@@ -3,8 +3,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { serverLink } from './../../../utilities/links';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import auth from '../../../firebase.init';
 import Loading from '../../Shared/Loading';
 import { AiFillTrophy } from 'react-icons/ai';
 import { FaRegSadTear } from 'react-icons/fa';

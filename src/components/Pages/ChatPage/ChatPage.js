@@ -8,7 +8,6 @@ import Loading from '../../Shared/Loading';
 import ChatContainer from './ChatContainer';
 import MyChat from './MyChat';
 import SingleProfile from './SingleProfile';
-import { checkTokenExpired } from './../../../utilities/checkTokenExpired';
 import { useNavigate } from 'react-router-dom';
 import { serverLink } from './../../../utilities/links';
 

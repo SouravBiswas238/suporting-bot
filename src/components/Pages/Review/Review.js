@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Review.css';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import auth from '../../../firebase.init';
 import ReactStars from 'react-rating-stars-component';
 import { useForm } from 'react-hook-form';
 import Lottie from 'lottie-web';
 import data from './53395-login.json';
 
 const Review = () => {
-  const [user] = useAuthState(auth);
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +42,6 @@ const Review = () => {
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              value={user?.displayName}
               className="review-input mb-4"
               {...register('firstName')}
             />
