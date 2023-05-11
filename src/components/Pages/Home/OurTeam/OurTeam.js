@@ -55,7 +55,7 @@ const OurTeam = () => {
     }
   ]
   return (
-    <div className='slider-container py-16 bg-[#f3f3f3] dark:bg-[#0b1120]'>
+    <div className=' slider-container py-16 bg-[#f3f3f3] dark:bg-[#0b1120]'>
       <div className="text-center mb-10">
 
         <h1 className="text-[#1C2880] dark:text-[#E2E8F0] text-[2rem] md:text-[3.5rem] leading-[3.2rem]  font-semibold mb-2">
@@ -102,7 +102,7 @@ const OurTeam = () => {
 
               <img src={team?.image} alt='images' />
 
-              
+
 
               <h1 className='text-[#1C2880] dark:text-[#38BDF8] font-semibold mt-2'>{team?.name}</h1>
               <h1 className='dark:text-[#E2E8F0]'>{team?.role}</h1>

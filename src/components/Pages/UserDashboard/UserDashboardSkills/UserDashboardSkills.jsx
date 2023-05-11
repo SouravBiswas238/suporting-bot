@@ -48,7 +48,7 @@ const UserDashboardSkills = () => {
             <div className="w-full mb-3 ">
               <label
                 for="skills1"
-                class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                className="block mb-2 text-base font-medium text-gray-900 ml-1"
               >
                 Skills
               </label>
@@ -57,7 +57,7 @@ const UserDashboardSkills = () => {
                   {...register("skills1")}
                   type="text"
                   id="skills1"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Added your Skills"
                 />
               </div>
@@ -66,7 +66,7 @@ const UserDashboardSkills = () => {
             <div className="w-full mb-3 ">
               <label
                 for="skills2"
-                class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                className="block mb-2 text-base font-medium text-gray-900 ml-1"
               >
                 Skills
               </label>
@@ -75,7 +75,7 @@ const UserDashboardSkills = () => {
                   {...register("skills2")}
                   type="text"
                   id="skills2"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Added your Skills"
                 />
               </div>
@@ -84,7 +84,7 @@ const UserDashboardSkills = () => {
             <div className="w-full mb-3 ">
               <label
                 for="skills3"
-                class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                className="block mb-2 text-base font-medium text-gray-900 ml-1"
               >
                 Skills
               </label>
@@ -93,7 +93,7 @@ const UserDashboardSkills = () => {
                   {...register("skills3")}
                   type="text"
                   id="skills3"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Added your Skills"
                 />
               </div>
@@ -102,7 +102,7 @@ const UserDashboardSkills = () => {
             <div className="w-full mb-3 ">
               <label
                 for="skills4"
-                class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                className="block mb-2 text-base font-medium text-gray-900 ml-1"
               >
                 Skills
               </label>
@@ -111,7 +111,7 @@ const UserDashboardSkills = () => {
                   {...register("skills4")}
                   type="text"
                   id="skills4"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Added your Skills"
                 />
               </div>

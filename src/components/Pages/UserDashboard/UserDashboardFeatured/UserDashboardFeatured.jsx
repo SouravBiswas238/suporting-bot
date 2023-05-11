@@ -80,14 +80,14 @@ const UserDashboardFeatured = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="skills"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Featured Photo<span className="text-red-600 ml-[1px]">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
                     onChange={(e) => upLodeFeaturedPhoto(e.target.files)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Featured Title"
                     type="file"
                     name="featuredPhoto"
@@ -99,7 +99,7 @@ const UserDashboardFeatured = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="featured_title"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Featured Title<span className="text-red-600 ml-[1px]">*</span>
                 </label>
@@ -107,7 +107,7 @@ const UserDashboardFeatured = () => {
                   {...register("featured_title")}
                   type="text"
                   id="featured_title"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Featured Title"
                   required
                 />
@@ -115,7 +115,7 @@ const UserDashboardFeatured = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="featured_description"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Featured Description
                   <span className="text-red-600 ml-[1px]">*</span>
@@ -126,7 +126,7 @@ const UserDashboardFeatured = () => {
                   name="featured_description"
                   rows="5"
                   id="featured_description"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Featured Description"
                   required
                 />

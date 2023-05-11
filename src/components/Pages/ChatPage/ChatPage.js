@@ -40,7 +40,7 @@ const ChatPage = () => {
                     setSearchResult(res?.data);
                 })
                 .catch(function (err) {
-                    checkTokenExpired(err) === true && navigate('/login')
+                    // (err) === true && navigate('/login')
                 })
 
         }
@@ -51,12 +51,12 @@ const ChatPage = () => {
 
     return (
         <div>
-            <div class="drawer h-[calc(100vh-110px)]">
-                <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+            <div className="drawer h-[calc(100vh-110px)]">
+                <input id="my-drawer" type="checkbox" className="drawer-toggle" />
 
-                <div class="drawer-content ">
+                <div className="drawer-content ">
                     <div className='grid lg:grid-cols-3  py-1 chat-background ]'>
-                        <div class="h-[calc(100vh-130px)] carousel carousel-vertical ">
+                        <div className="h-[calc(100vh-130px)] carousel carousel-vertical ">
 
                             <div className=''>
                                 {
@@ -77,9 +77,9 @@ const ChatPage = () => {
                     </div>
                 </div>
 
-                <div class="drawer-side">
-                    <label for="my-drawer" class="drawer-overlay"></label>
-                    <ul class="menu p-4 overflow-y-auto lg:w-[30%] w-[90%] bg-base-100 text-base-content">
+                <div className="drawer-side">
+                    <label for="my-drawer" className="drawer-overlay"></label>
+                    <ul className="menu p-4 overflow-y-auto lg:w-[30%] w-[90%] bg-base-100 text-base-content">
                         <li className='text-center p-2 font-bold'>Search User</li>
 
                         <div className='flex items-center'>

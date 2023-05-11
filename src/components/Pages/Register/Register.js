@@ -10,6 +10,9 @@ import googleLogo from '../../../images/google.png';
 import Lottie from 'lottie-web';
 import regisLottie from './lottie1.json';
 import AccountTypePage from './AccountTypePage';
+import useFetch from '../../../hooks/useFetch';
+import axios from 'axios';
+// import useFetch from "react-fetch-hook"
 
 const Register = () => {
   // for lottie
@@ -38,15 +41,33 @@ const Register = () => {
   const [passwordBar, setPasswordBar] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const [usernameAvailable, setUsernameAvailable] = useState(null);
-  const [showAccType, setShowAccType] = useState(false);
-  const [username, setUsername] = useState('');
+
   let loading;
 
-  //Token
+
+
   const onSubmit = async (data) => {
-    if (data.password === data.confirmPassword) {
+    if (data.password1 === data.password2) {
       console.log(data)
+      try {
+        // Post data to the API
+        const response = await axios.post("https://customer-support-bot-3z5mv.ondigitalocean.app/account/registration", data);
+        console.log(response)
+
+        const { status } = response.status;
+        if (status === 204) {
+          navigate('/')
+          toast('user create successfully')
+        }
+        // Save access token in session storage
+        // sessionStorage.setItem("accessToken", Token);
+        // console.log("Access token saved in session storage:", Token);
+
+        // Perform additional actions after successful login, if needed
+      } catch (error) {
+        console.error("Error logging in:", error);
+        // Handle error, if needed
+      }
 
     } else {
       console.log("password not matched")
@@ -54,6 +75,17 @@ const Register = () => {
   };
 
 
+  // fetch data FXpGTuJC1g@&3
+
+  // const { isLoading, apiData, apiError } = useFetch(
+  //   "GET",
+  //   "https://jsonplaceholder.typicode.com/users",
+  //   {}
+  // );
+  // console.log(isLoading, apiData, apiError)
+
+  // const { isLoading, apiError, data } = useFetch("https://jsonplaceholder.typicode.com/users");
+  // console.log(data, isLoading, apiError);
 
 
   return (
@@ -73,7 +105,7 @@ const Register = () => {
                       Registration
                     </h1>
                     {/* user email   */}
-                    <div className="form-control mb-">
+                    <div className="form-control ">
                       <label className="label">
                         <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
                           Email
@@ -104,15 +136,20 @@ const Register = () => {
                         value={passwordBar}
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Input Password"
-                        name="password"
+                        name="password1"
                         className="input-customize dark:border-[#0D1425]  
                                                 dark:bg-[#1E293B] dark:text-white dark:outline-0"
-                        {...register('password', {
+                        {...register('password1', {
                           required: true,
                           // pattern: /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
                         })}
                         onChange={(e) => setPasswordBar(e.target.value)}
                       />
+                      {errors?.password1?.type === 'required' && (
+                        <span className="label-text-alt text-red-500 text-lg">
+                          Password is Required
+                        </span>
+                      )}
 
                       {/*Confirm Password */}
                       <label className="label">
@@ -126,16 +163,22 @@ const Register = () => {
                         className="hidden input input-bordered text-xl"
                       />
                       <input
+
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Confirm Password"
-                        name="confirmPassword"
+                        name="password2"
                         className="input-customize dark:border-[#0D1425]  
                                     dark:bg-[#1E293B] dark:text-white dark:outline-0"
-                        {...register('confirmPassword', {
+                        {...register('password2', {
                           required: true,
-                          // pattern: /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
                         })}
+
                       />
+                      {errors?.password2?.type === 'required' && (
+                        <span className="label-text-alt text-red-500 text-lg">
+                          Password is Required
+                        </span>
+                      )}
 
                       <div className="text-md flex  justify-between mt-4  md:items-center xs:flex-col-reverse">
                         <div>
@@ -170,22 +213,19 @@ const Register = () => {
                       <PasswordStrengthBar password={passwordBar} />
 
                       <label className="label">
-                        {errors.password?.type == 'pattern' && (
-                          <span className="label-text-alt text-red-500 text-lg">
+                        {errors.password1?.type && errors.password2?.type === 'pattern' && (
+                          <span className="label-text-alt text-red-500 text-lg text-[.8rem]">
                             Password must be atleast 6 characters containing
                             both capital and small letter, a Number, 1 special
-                            character
+                            characters
                           </span>
                         )}
-                        {errors?.password?.type === 'required' && (
-                          <span className="label-text-alt text-red-500 text-lg">
-                            Password is Required
-                          </span>
-                        )}
+
                       </label>
 
 
                     </div>
+
 
 
 
@@ -208,8 +248,10 @@ const Register = () => {
                         </Link>
                       </label>
                     </div>
-                    <div className="flex flex-col w-full border-opacity-50">
-                      <div className="divider dark:text-[#8C9BB6]">OR</div>
+                    <div className="flex justify-center items-center my-5">
+                      <div className=" text-center border-2  w-full text-[#474d59]"></div>
+                      <div className=" text-center mx-2 dark:text-[#8C9BB6]">OR</div>
+                      <div className=" text-center border-2  w-full text-[#8C9BB6]"></div>
                     </div>
 
                     <div className="form-control mt-4 ">

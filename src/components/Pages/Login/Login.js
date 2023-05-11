@@ -10,6 +10,8 @@ import Lottie from 'lottie-web';
 import loginLottie from './login2.json';
 // import { AiFillEye } from 'react-icons/ai'
 import './Login.css';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 // import loginLottie from './login-lottie.json'
 
 const Login = () => {
@@ -34,7 +36,6 @@ const Login = () => {
 
   let loading = false;
   // React hook forms element
-  // React hook forms element
   const {
     register,
     formState: { errors },
@@ -52,9 +53,25 @@ const Login = () => {
   // if (loading || gLoading) {
   //   return <Loading></Loading>;
   // }
-  const onSubmit = (data) => {
-    const email = data.email;
-    const password = data.password;
+  const onSubmit = async (formData) => {
+    try {
+      // Post data to the API
+      const response = await axios.post("https://customer-support-bot-3z5mv.ondigitalocean.app/account/login/", formData);
+      // console.log(response.data)
+
+      const { key } = response.data;
+      console.log(key);
+
+      // Save access token in session storage
+      sessionStorage.setItem("accessToken", key);
+      console.log("Access token saved in session storage:", key);
+      key && navigate('/');
+
+      // Perform additional actions after successful login, if needed
+    } catch (error) {
+      console.error("Error logging in:", error);
+      // Handle error, if needed
+    }
   };
 
   return (
@@ -75,7 +92,7 @@ const Login = () => {
                   Dont share your login information
                 </p>
                 <div className="form-control mt-4">
-                  <label className="label">
+                  <label className="label my-2">
                     <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
                       Email
                     </span>
@@ -84,7 +101,7 @@ const Login = () => {
                     type="email"
                     placeholder="Email"
                     name="email"
-                    className="input-customize dark:border-[#0D1425]  
+                    className="my-2 input-customize dark:border-[#0D1425]  
                                     dark:bg-[#1E293B] dark:text-white dark:outline-0"
                     {...register('email', { required: true })}
                   />
@@ -102,16 +119,23 @@ const Login = () => {
                       Password
                     </span>
                   </label>
+                  <div className='flex relative'>
 
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
-                    name="password"
-                    className="input-customize dark:border-[#0D1425] dark:bg-[#1E293B] dark:text-white"
-                    {...register('password', {
-                      required: true,
-                    })}
-                  ></input>
+
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Password"
+                      name="password"
+                      className="input-customize my-2 dark:border-[#0D1425] dark:bg-[#1E293B] dark:text-white"
+                      {...register('password', {
+                        required: true,
+                      })}
+                    ></input>
+
+                    <label className="label cursor-pointer absolute right-1 top-3 text-[19px] ">
+                      <input onChange={() => setShowPassword(!showPassword)} type="checkbox" checked={showPassword} className="checkbox " />
+                    </label>
+                  </div>
 
                   <div className="mt-6 flex justify-between items-center">
                     {/* <div>
@@ -135,10 +159,7 @@ const Login = () => {
                         Login
                       </button>
                     )}
-                    {/* <label className="label cursor-pointer">
-                                            <span className="label-text">&nbsp; Show Password &nbsp;</span>
-                                            <input onChange={() => setShowPassword(!showPassword)} type="checkbox" checked={showPassword} className="checkbox" />
-                                        </label> */}
+
 
                     <div>
                       <label className="my-2">
@@ -172,8 +193,10 @@ const Login = () => {
 
 
               </form>
-              <div className="flex flex-col w-full dark:text-[#8C9BB6] border-opacity-50 mt-4">
-                <div className="divider dark:text-[#8C9BB6]">OR</div>
+              <div className="flex justify-center items-center my-5">
+                <div className=" text-center border-2  w-full text-[#474d59]"></div>
+                <div className=" text-center mx-2 dark:text-[#8C9BB6]">OR</div>
+                <div className=" text-center border-2  w-full text-[#8C9BB6]"></div>
               </div>
               <div className="form-control mt-4 ">
                 <button

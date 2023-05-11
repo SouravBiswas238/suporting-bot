@@ -57,10 +57,10 @@ const AccountTypePage = ({ type }) => {
     return (
         <div className='h-[100vh] dark:bg-[#0b1120] bg-[#fff]'>
             <div className='flex justify-center   justify-items-center pt-20'>
-                <div class="card  md:w-1/5 w-full dark:text-[#0b1120] my-border dark:bg-transparent bg-[#fff] shadow-xl h-fit">
+                <div className="card  md:w-1/5 w-full dark:text-[#0b1120] my-border dark:bg-transparent bg-[#fff] shadow-xl h-fit">
 
-                    <div class="card-body ">
-                        <h2 class="card-title dark:text-[#8C9BB6] text-[#273272] text-2xl text-center font-semibold ">Are you a Developer? or Recruiter</h2>
+                    <div className="card-body ">
+                        <h2 className="card-title dark:text-[#8C9BB6] text-[#273272] text-2xl text-center font-semibold ">Are you a Developer? or Recruiter</h2>
                         <div className={`flex flex-col gap-5 mt-10 ${errorStyle}`}>
                             <div onClick={() => handleBgColor('developer')} className={`text-[#273272] dark:text-[#8C9BB6] my-border p-2 text-xl text-center rounded-lg ${selectedOptionDev} cursor-pointer`}>
                                 <p>Join As a Developer</p>

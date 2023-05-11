@@ -10,25 +10,21 @@ const MainAdmin = () => {
   const dashboardSwitch = { dbSwitch, setDbSwitch };
 
   // use Location
-  const location = useLocation();
 
-  const bgColor =
-    location?.pathname === '/admin/findJob' ? 'bg-white' : 'admin-bg';
 
   return (
     //main admin dashboard section
     <section className="flex">
       {/* admin sidebar */}
       <div
-        className={`admin-bg  min-h-screen duration-500 ease-in-out ${
-          dbSwitch ? 'w-[17%] min-w-[15rem]' : 'w-[5rem]'
-        }`}
+        className={` bg-[#f3f3f3]  dark:bg-[#0b1120] shadow-lg border-r-2  min-h-screen duration-300 ease-in-out ${dbSwitch ? 'w-[17%] min-w-[15rem]' : 'w-[5rem]'
+          }`}
       >
         <Sidebar dashboardSwitch={dashboardSwitch} />
       </div>
 
       {/* admin component render */}
-      <div className={`${bgColor} min-w-[83%] w-full p-5`}>
+      <div className={`bg-[#f3f3f3]  dark:bg-[#0b1120] min-w-[83%] w-full p-5`}>
         <Outlet></Outlet>
       </div>
     </section>

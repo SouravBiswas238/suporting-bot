@@ -12,11 +12,11 @@ import Contact from '../../Contact/Contact';
 
 const Home = () => {
     return (
-        <div>
+        <div >
             <Banner />
             <About />
             <Service />
-            <Agency />
+            {/* <Agency /> */}
             <OurTeam />
             <Contact />
             {/* <Articles /> */}

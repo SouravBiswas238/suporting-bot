@@ -5,7 +5,7 @@ const SpinLoading = () => {
     <div className=" cursor-progress  z-50">
       <svg
         role="status"
-        class="inline mr-3 w-12 h-12 animate-spin"
+        className="inline mr-3 w-12 h-12 animate-spin"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

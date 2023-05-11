@@ -85,14 +85,14 @@ const UserDashboardProjects = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="project_photo"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Project Photo<span className="text-red-600 ml-[1px]">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
                     onChange={(e) => upLodeProjectsPhoto(e.target.files)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     type="file"
                     name="project_photo"
                     id="project_photo"
@@ -104,7 +104,7 @@ const UserDashboardProjects = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="project_title"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Project Title<span className="text-red-600 ml-[1px]">*</span>
                 </label>
@@ -112,7 +112,7 @@ const UserDashboardProjects = () => {
                   {...register("project_title")}
                   type="text"
                   id="project_title"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Project Title"
                   required
                 />
@@ -121,7 +121,7 @@ const UserDashboardProjects = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="live_link"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Live Site Link<span className="text-red-600 ml-[1px]">*</span>
                 </label>
@@ -129,7 +129,7 @@ const UserDashboardProjects = () => {
                   {...register("live_link")}
                   type="text"
                   id="live_link"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Live Site link "
                   required
                 />
@@ -138,7 +138,7 @@ const UserDashboardProjects = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="client_link"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   GitHub client Link
                 </label>
@@ -146,7 +146,7 @@ const UserDashboardProjects = () => {
                   {...register("client_link")}
                   type="text"
                   id="client_link"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="GitHub client Link"
                 />
               </div>
@@ -154,7 +154,7 @@ const UserDashboardProjects = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="server_link"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   GitHub Server Link
                 </label>
@@ -162,7 +162,7 @@ const UserDashboardProjects = () => {
                   {...register("server_link")}
                   type="text"
                   id="server_link"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="GitHub Server Link"
                 />
               </div>
@@ -171,7 +171,7 @@ const UserDashboardProjects = () => {
             <div className="w-full mb-3 ">
               <label
                 for="project_description"
-                class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                className="block mb-2 text-base font-medium text-gray-900 ml-1"
               >
                 Project Description
                 <span className="text-red-600 ml-[1px]">*</span>
@@ -180,7 +180,7 @@ const UserDashboardProjects = () => {
                 {...register("project_description")}
                 rows="5"
                 id="project_description"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="Project Description"
                 required
               />

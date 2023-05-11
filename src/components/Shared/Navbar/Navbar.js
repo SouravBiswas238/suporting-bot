@@ -59,7 +59,7 @@ const Navbar = () => {
 
 
                         <Link to='/'>
-                            <span className='ml-1 text-[#0D1425] dark:text-white'>Supporting<span className='dark:text-[#38BDF8] text-[#3878DF]'>Bot</span></span>
+                            <span className='ml-1 text-[#0D1425] dark:text-white'>Ai Sales<span className='dark:text-[#38BDF8] text-[#3878DF]'>Teams</span></span>
                         </Link>
 
                     </div>

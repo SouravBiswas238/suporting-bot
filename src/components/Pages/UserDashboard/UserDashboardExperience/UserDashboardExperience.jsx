@@ -79,7 +79,7 @@ const UserDashboardExperience = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="skills"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Experience Photo
                   <span className="text-red-600 ml-[1px]">*</span>
@@ -87,7 +87,7 @@ const UserDashboardExperience = () => {
                 <div className="flex items-center gap-2">
                   <input
                     onChange={(e) => upLodeExperiencePhoto(e.target.files)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Featured Title"
                     type="file"
                     name="featuredPhoto"
@@ -99,7 +99,7 @@ const UserDashboardExperience = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="experience_title"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Experience Title
                   <span className="text-red-600 ml-[1px]">*</span>
@@ -108,7 +108,7 @@ const UserDashboardExperience = () => {
                   {...register("experience_title")}
                   type="text"
                   id="experience_title"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Featured Title"
                   required
                 />
@@ -116,7 +116,7 @@ const UserDashboardExperience = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="experience_type"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Experience Type
                   <span className="text-red-600 ml-[1px]">*</span>
@@ -125,7 +125,7 @@ const UserDashboardExperience = () => {
                   {...register("experience_type")}
                   type="text"
                   id="experience_type"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Experience Type"
                   required
                 />
@@ -133,7 +133,7 @@ const UserDashboardExperience = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="experience_duration"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Experience Duration
                   <span className="text-red-600 ml-[1px]">*</span>
@@ -142,7 +142,7 @@ const UserDashboardExperience = () => {
                   {...register("experience_duration")}
                   type="text"
                   id="experience_duration"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Experience Duration"
                   required
                 />

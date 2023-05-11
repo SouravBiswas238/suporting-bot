@@ -28,7 +28,7 @@ const Developer = () => {
 
             {developerData.map((singleData) => (
               <div className="w-full card-Shadow p-4 bg-[#e9faff] dark:bg-[#1e293b]">
-                <div class="text-center">
+                <div className="text-center">
                   {/* image Box  */}
                   <div className="flex justify-center mt-3">
                     <img

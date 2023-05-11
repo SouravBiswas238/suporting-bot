@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Home/Home.css';
-import heroImg from '../../../../images/hero-one-img-2.jpg';
-import heroImgLogo from '../../../../images/circle-logo-1.png';
+import heroImg from '../../../../images/banner-ai.jpg';
+import heroImgLogo from '../../../../images/cerLogo.png';
 import { useNavigate } from 'react-router-dom';
 import './Banner.css';
 
@@ -24,40 +24,25 @@ const Banner = () => {
           <div className=" flex justify-center items-center">
             <div>
               <h1 className="md:text-[75px] text-[40px] leading-[60px] md:leading-[92px] font-bold text-[#1C2880] mb-[35px] dark:text-[#E2E8F0]">
-                Get{' '}
-                <span className="dark:text-[#38BDF8] text-[#3878DF]">
-                  talent
-                </span>{' '}
-                , Get{' '}
-                <span className="dark:text-[#38BDF8] text-[#3878DF]">job</span>{' '}
-                Recruiter Hub
+                AI Sales{' '}
+                <span className="dark:text-[#38BDF8] text-[#3878DF]">Teams</span>
+              </h1>
+              <h1 className="md:text-[50px] text-[40px] leading-[60px] md:leading-[62px] font-bold text-[#1C2880] mb-[35px] dark:text-[#E2E8F0]">
+                Empowering Sales  <span className="dark:text-[#38BDF8] text-[#3878DF]">Teams</span> with Artificial Intelligence
+
               </h1>
               <p className=" para-color dark:text-[#8C9BB6] text-[18px] mb-[45px] md:pr-[7%]  font-semibold">
-                Sit amet consectetur adipiscing elit sed do eiusmod tem
-                porincididunt ut labore et dolore magna aliqua. Quis psum
-                suspendisse ultrices gravida commodo viverra
+                Welcome to AI Sales teams. We believe in the power of artificial intelligence to revolutionize the way sales teams operate. Our cutting-edge technology and innovative solutions are designed to enhance sales performance, boost productivity, and drive revenue growth.
               </p>
               <div>
                 <button
-                  onClick={() => {
-                    localStorage.setItem('accountType', 'recruiter');
-                    navigateRecruiter('/register/recruiter'); //
-                  }}
                   className=" btn-primary-blue dark:bg-[#0284C7] text-white "
                 >
-                  Start Hiring{' '}
+                  Stay Connected{' '}
                   <i className="fa-solid fa-angle-right ml-[6px]"></i>
                 </button>
 
-                <button
-                  onClick={() => {
-                    localStorage.setItem('accountType', 'developer');
-                    navigateDeveloper('/register/developer');
-                  }}
-                  className="  btn-primary-blue2 dark:bg-[#0284C7] text-white ml-[25px]"
-                >
-                  Get a job <i className="fa-solid fa-angle-right ml-[6px]"></i>
-                </button>
+
               </div>
             </div>
           </div>
@@ -65,11 +50,11 @@ const Banner = () => {
             <img
               alt="nai"
               src={heroImg}
-              className="rounded-[250px] pl-[6rem] relative"
+              className=" scale-90 rounded-[350px] pl-[8rem] relative"
             />
             <img
               src={heroImgLogo}
-              className="absolute bottom-[12rem] right-[37.1rem]"
+              className="absolute bottom-[8rem] right-[27.1rem]"
               alt=""
             />
           </div>

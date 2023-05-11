@@ -15,7 +15,7 @@ const Agency = () => {
       onExit={() => setCounterOn(false)}
     >
       <section>
-        <div className="px-8 py-8 bg-[#f3f3f3] dark:bg-[#0F172A]">
+        <div className="px-8 py-8 bg-[#f3f3f3] dark:bg-[#0F172A] container mx-auto">
           {/* Agency header  */}
 
           <div className="flex justify-center ">
@@ -32,8 +32,8 @@ const Agency = () => {
             </div>
           </div>
 
-          <div className="md:flex justify-evenly mt-10 pb-10">
-            <div className="p-10 text-center bg-white dark:bg-transparent shadow-agency  mb-8 ">
+          <div className="md:flex justify-between mt-10 pb-10">
+            <div className="lg:p-12 p-8 text-center bg-white dark:bg-transparent shadow-agency  ">
               <div className="flex justify-center mb-4">
                 <ImManWoman className="text-5xl text-[#061835] dark:text-[#38BDF8]" />
               </div>
@@ -48,7 +48,7 @@ const Agency = () => {
               </p>
             </div>
 
-            <div className="p-10 text-center bg-white dark:bg-transparent shadow-agency  mb-8 ">
+            <div className="lg:p-12 p-8 text-center bg-white dark:bg-transparent shadow-agency  ">
               <div className="flex justify-center mb-4">
                 <RiMoneyDollarBoxFill className="text-5xl text-[#061835] dark:text-[#38BDF8]" />
               </div>
@@ -63,7 +63,7 @@ const Agency = () => {
               </p>
             </div>
 
-            <div className="p-10 text-center bg-white dark:bg-transparent shadow-agency  mb-8 ">
+            <div className="lg:p-12 p-8 text-center bg-white dark:bg-transparent shadow-agency  ">
               <div className="flex justify-center mb-4">
                 <FaStaylinked className="text-5xl text-[#061835] dark:text-[#38BDF8]" />
               </div>
@@ -78,7 +78,7 @@ const Agency = () => {
               </p>
             </div>
 
-            <div className="p-10 text-center bg-white dark:bg-transparent shadow-agency  mb-8 ">
+            <div className="lg:p-12 p-8 text-center bg-white dark:bg-transparent shadow-agency  ">
               <div className="flex justify-center mb-4">
                 <MdRateReview className="text-5xl text-[#061835] dark:text-[#38BDF8]" />
               </div>
@@ -93,6 +93,7 @@ const Agency = () => {
               </p>
             </div>
           </div>
+
         </div>
       </section>
     </ScrollTrigger>

@@ -78,14 +78,14 @@ const UserDashboardCourses = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="courses_photo"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Courses Photo<span className="text-red-600 ml-[1px]">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
                     onChange={(e) => upLodeCoursesPhoto(e.target.files)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Featured Title"
                     type="file"
                     name="courses_photo"
@@ -97,7 +97,7 @@ const UserDashboardCourses = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="courses_title"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Courses Title<span className="text-red-600 ml-[1px]">*</span>
                 </label>
@@ -105,7 +105,7 @@ const UserDashboardCourses = () => {
                   {...register("courses_title")}
                   type="text"
                   id="courses_title"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Courses Title"
                   required
                 />
@@ -113,7 +113,7 @@ const UserDashboardCourses = () => {
               <div className="w-full mb-3 ">
                 <label
                   for="courses_description"
-                  class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                  className="block mb-2 text-base font-medium text-gray-900 ml-1"
                 >
                   Courses Description
                   <span className="text-red-600 ml-[1px]">*</span>
@@ -122,7 +122,7 @@ const UserDashboardCourses = () => {
                   {...register("courses_description")}
                   type="text"
                   id="courses_description"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Courses Description"
                   required
                 />

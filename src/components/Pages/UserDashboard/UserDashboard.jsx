@@ -119,7 +119,7 @@ const UserDashboard = () => {
                         id="cover_photo"
                         name="cover_photo"
                         required
-                        class="max-w-[30rem] mx-auto bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        className="max-w-[30rem] mx-auto bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       />
                       {loadingCover && <SpinLoading />}
                     </div>
@@ -140,7 +140,7 @@ const UserDashboard = () => {
                   <div className="mb-3">
                     <label
                       for="profile_photo"
-                      class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                      className="block mb-2 text-base font-medium text-gray-900 ml-1"
                     >
                       Profile Photo
                     </label>
@@ -151,7 +151,7 @@ const UserDashboard = () => {
                         id="profile_photo"
                         name="profile_photo"
                         required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       />
                       {loadingProfile && <SpinLoading />}
                     </div>
@@ -161,7 +161,7 @@ const UserDashboard = () => {
                   <div>
                     <label
                       for="name"
-                      class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                      className="block mb-2 text-base font-medium text-gray-900 ml-1"
                     >
                       Name
                     </label>
@@ -169,7 +169,7 @@ const UserDashboard = () => {
                       {...register("name")}
                       type="text"
                       id="name"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       placeholder="Name"
                       required
                     />
@@ -179,7 +179,7 @@ const UserDashboard = () => {
                   <div>
                     <label
                       for="bio"
-                      class="block mb-2 text-base font-medium text-gray-900 ml-1"
+                      className="block mb-2 text-base font-medium text-gray-900 ml-1"
                     >
                       Bio
                     </label>
@@ -188,7 +188,7 @@ const UserDashboard = () => {
                       rows="5"
                       name="bio"
                       id="bio"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full block p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full block p-2.5"
                       placeholder="Your Bio..."
                       required
                     />

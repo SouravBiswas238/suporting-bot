@@ -30,14 +30,14 @@ module.exports = {
   daisyui: {
 
   },
-  plugins: [require("daisyui"),
-  function ({ addVariant }) {
-    addVariant('child', '& > *');
-    addVariant('child-hover', '& > *:hover');
-    addVariant('xs', '@media (max-width: 639px){}');
+  // plugins: [require("daisyui"),
+  // function ({ addVariant }) {
+  //   addVariant('child', '& > *');
+  //   addVariant('child-hover', '& > *:hover');
+  //   addVariant('xs', '@media (max-width: 639px){}');
 
-  }
-  ],
+  // }
+  // ],
 }
 
 // dark mode 

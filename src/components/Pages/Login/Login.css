@@ -3,7 +3,7 @@
   background-color: rgb(255, 255, 255);
   transition: border-color 100ms ease 0s;
   font-family: "Hind Siliguri", sans-serif;
-  height: 40px;
+  /* height: 40px; */
   -webkit-tap-highlight-color: transparent;
   line-height: 34px;
   appearance: none;
@@ -19,6 +19,7 @@
   padding-right: 12px;
   border-radius: 4px;
 }
+
 .input-customize-textarea {
   border: 1px solid rgb(206, 212, 218);
   background-color: rgb(255, 255, 255);

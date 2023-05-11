@@ -4,7 +4,6 @@ function makeId(length) {
     let result3;
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const special = '!@#$%^&*';
-    const number = '!@#$%^&*';
     const charactersLength = characters.length;
     const specialLength = special.length;
     for (let i = 0; i < length; i++) {
