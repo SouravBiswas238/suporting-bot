@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import PasswordStrengthBar from 'react-password-strength-bar';
 import makeId from './SuggestPass';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
-import googleLogo from '../../../images/google.png';
 import Lottie from 'lottie-web';
 import regisLottie from './lottie1.json';
-import AccountTypePage from './AccountTypePage';
-import useFetch from '../../../hooks/useFetch';
 import axios from 'axios';
+import { serverLink } from '../../../utilities/links';
+import Loading from '../../Shared/Loading';
 // import useFetch from "react-fetch-hook"
 
 const Register = () => {
@@ -33,47 +32,61 @@ const Register = () => {
   const accType = localStorage.getItem('accountType');
   const navigate = useNavigate();
 
+  const [passwordBar, setPasswordBar] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [customError, setCustomError] = useState('');
+  const [loading, setLoading] = useState(false);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [passwordBar, setPasswordBar] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-
-  let loading;
-
-
 
   const onSubmit = async (data) => {
+    setLoading(true);
     if (data.password1 === data.password2) {
       console.log(data)
       try {
         // Post data to the API
-        const response = await axios.post("https://customer-support-bot-3z5mv.ondigitalocean.app/account/registration", data);
+        const response = await axios.post(`${serverLink}/account/registration`, data);
         console.log(response)
 
-        const { status } = response.status;
-        if (status === 204) {
-          navigate('/')
-          toast('user create successfully')
+        response.status && setLoading(false);
+        response.status && setCustomError('');
+        if (response.status === 204) {
+          navigate('/') && toast('user create successfully');
         }
+
+        // Save access token in session storage FXpGTuJC1g@&3
+        const { key } = response.data;
+        console.log(key);
         // Save access token in session storage
-        // sessionStorage.setItem("accessToken", Token);
-        // console.log("Access token saved in session storage:", Token);
+        sessionStorage.setItem("accessToken", key);
+        console.log("Access token saved in session storage:", key);
+        // response.data.status === 204 && navigate('/');
+
 
         // Perform additional actions after successful login, if needed
       } catch (error) {
+        error.message && setLoading(false);
         console.error("Error logging in:", error);
-        // Handle error, if needed
+        error.message && setCustomError(error.message);
+        error.response.data?.non_field_errors && setCustomError(error.response.data?.non_field_errors);
+        error.response?.data?.email && setCustomError(error.response?.data?.email);
+
+
+
       }
 
     } else {
-      console.log("password not matched")
+      setCustomError("Password not matched")
     }
   };
+  console.log(customError);
 
+  if (loading) {
+    return <Loading />;
+  }
 
   // fetch data FXpGTuJC1g@&3
 
@@ -119,11 +132,15 @@ const Register = () => {
                         {...register('email', { required: true })}
                       />
                     </div>
-
+                    {errors?.email?.type === 'required' && (
+                      <p className="label-text-alt text-red-500 text-lg">
+                        Email is Required
+                      </p>
+                    )}
                     <div className="form-control">
                       {/* Password */}
                       <label className="label">
-                        <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
+                        <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155] my-1">
                           Password
                         </span>
                       </label>
@@ -153,9 +170,9 @@ const Register = () => {
 
                       {/*Confirm Password */}
                       <label className="label">
-                        <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
+                        <p className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155] my-1">
                           Confirm Password
-                        </span>
+                        </p>
                       </label>
                       <input
                         type="text"
@@ -179,6 +196,7 @@ const Register = () => {
                           Password is Required
                         </span>
                       )}
+
 
                       <div className="text-md flex  justify-between mt-4  md:items-center xs:flex-col-reverse">
                         <div>
@@ -228,17 +246,18 @@ const Register = () => {
 
 
 
+                    {
+                      customError && <span className="label-text-alt text-red-500 text-lg">
+                        {customError}
+                      </span>
+                    }
 
                     <div className="mt-4 flex justify-between items-center">
-                      {loading ? (
-                        <button className="bg-[#0F172A] dark:bg-[#0284C7] font-bold btn-login text-white  uppercase">
-                          Register
-                        </button>
-                      ) : (
-                        <button className="bg-[#0F172A] dark:bg-[#0284C7] font-bold btn-login text-white  uppercase">
-                          Register
-                        </button>
-                      )}
+
+                      <button className="bg-[#0F172A] dark:bg-[#0284C7] font-bold btn-login text-white  uppercase">
+                        Register
+                      </button>
+
                       <label>
                         <Link
                           to="/login"
@@ -248,12 +267,13 @@ const Register = () => {
                         </Link>
                       </label>
                     </div>
-                    <div className="flex justify-center items-center my-5">
+
+                    {/* continu with google part */}
+                    {/* <div className="flex justify-center items-center my-5">
                       <div className=" text-center border-2  w-full text-[#474d59]"></div>
                       <div className=" text-center mx-2 dark:text-[#8C9BB6]">OR</div>
                       <div className=" text-center border-2  w-full text-[#8C9BB6]"></div>
                     </div>
-
                     <div className="form-control mt-4 ">
                       <button
                         className=" py-2  flex justify-center items-center input-border dark:border-0 font-semibold bg-transparent text-[#334155] dark:text-[#8C9BB6] dark:bg-[#1E293B] w-full "
@@ -263,7 +283,7 @@ const Register = () => {
                           Continue With Google
                         </span>
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </form>
 
@@ -272,7 +292,6 @@ const Register = () => {
             </div>
 
             {/* right side animation */}
-
             <div className="flex justify-center items-center">
               <div className="w-fit mx-auto">
                 <div

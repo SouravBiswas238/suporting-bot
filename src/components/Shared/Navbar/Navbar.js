@@ -9,7 +9,7 @@ import { MdDarkMode } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsPlusLg, BsTools, BsInfoCircleFill, BsFillFileEarmarkMedicalFill } from "react-icons/bs";
-import { MdDeveloperMode, MdOutlineConnectWithoutContact } from "react-icons/md";
+import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { RiLoginBoxLine } from "react-icons/ri";
@@ -23,10 +23,13 @@ const Navbar = () => {
 
     const [navSwitch, setNavSwitch] = useState(false);
     const [userSwitch, setUserSwitch] = useState(false);
+
     // user information  code {sourav}
+    const tokenInLStorage = sessionStorage.getItem("accessToken");
+    console.log("from navbar", tokenInLStorage);
 
     const handleSignOut = () => {
-        localStorage.removeItem('accessToken')
+        sessionStorage.removeItem("accessToken", null);
         // closed user information menu bar
         setUserSwitch(false)
     }
@@ -98,7 +101,7 @@ const Navbar = () => {
                         <ul className='flex mr-[10px]'>
 
                             {
-                                !user ?
+                                !tokenInLStorage ?
                                     <>
                                         <li onClick={closedNavbarAll} className='mr-4 mb-4 md:mb-0 hidden md:block'> <NavLink to="/login" className={({ isActive }) => (isActive ? active : deActive)} >Login</NavLink> </li>
 

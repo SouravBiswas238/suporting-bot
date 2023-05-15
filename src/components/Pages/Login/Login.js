@@ -2,16 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
-import Loading from './../../Shared/Loading';
-import useToken from './../../../hooks/useToken';
 import googleLogo from '../../../images/google.png';
-// import { UserStore } from '../../../stateManagement/UserContext/UserContextStore';
 import Lottie from 'lottie-web';
 import loginLottie from './login2.json';
-// import { AiFillEye } from 'react-icons/ai'
 import './Login.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { serverLink } from '../../../utilities/links';
+import Loading from '../../Shared/Loading';
 // import loginLottie from './login-lottie.json'
 
 const Login = () => {
@@ -34,7 +32,11 @@ const Login = () => {
   const location = useLocation();
   const from = location?.state?.from?.pathname || '/';
 
-  let loading = false;
+  const [loading, setLoading] = useState(false);
+  const [customError, setCustomError] = useState('');
+
+
+
   // React hook forms element
   const {
     register,
@@ -47,32 +49,36 @@ const Login = () => {
 
   // globalUser is [user]= useAuthState(auth)
   const [showPassword, setShowPassword] = useState(false);
-  const tokenInLStorage = localStorage.getItem('accessToken');
 
-
-  // if (loading || gLoading) {
-  //   return <Loading></Loading>;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
   const onSubmit = async (formData) => {
+    setLoading(true);
     try {
       // Post data to the API
-      const response = await axios.post("https://customer-support-bot-3z5mv.ondigitalocean.app/account/login/", formData);
-      // console.log(response.data)
-
+      const response = await axios.post(`${serverLink}/account/login/`, formData);
+      console.log(response)
+      response && setLoading(false)
+      // Save access token in session storage FXpGTuJC1g@&3
       const { key } = response.data;
-      console.log(key);
-
+      // console.log(key);
       // Save access token in session storage
       sessionStorage.setItem("accessToken", key);
-      console.log("Access token saved in session storage:", key);
-      key && navigate('/');
-
       // Perform additional actions after successful login, if needed
+      response.status === 200 && navigate('/');
+
     } catch (error) {
-      console.error("Error logging in:", error);
+      error && setLoading(false);
+      console.log(error)
+      error.message && setCustomError(error.message);
+      error.response.data?.non_field_errors && setCustomError(error.response.data?.non_field_errors);
+      error.response.data.email && setCustomError(error.response.data.email);
       // Handle error, if needed
     }
   };
+
+
 
   return (
     <div className="min-h-[100vh] py-10 dark:bg-[#0D1425] bg-[#F3F3F3]">
@@ -132,11 +138,22 @@ const Login = () => {
                       })}
                     ></input>
 
+
+
                     <label className="label cursor-pointer absolute right-1 top-3 text-[19px] ">
                       <input onChange={() => setShowPassword(!showPassword)} type="checkbox" checked={showPassword} className="checkbox " />
                     </label>
                   </div>
-
+                  {errors?.password?.type === 'required' && (
+                    <span className="label-text-alt text-red-500 text-lg">
+                      Password is Required
+                    </span>
+                  )}
+                  {
+                    customError && <p className="label-text-alt text-red-500 text-lg">
+                      {customError}
+                    </p>
+                  }
                   <div className="mt-6 flex justify-between items-center">
                     {/* <div>
                                             <label className="my-2">
@@ -144,21 +161,15 @@ const Login = () => {
                                             </label>
                                         </div> */}
 
-                    {loading ? (
-                      <button
-                        type="submit"
-                        className=" font-bold  text-white btn-login loading uppercase dark:bg-[#0284C7] bg-[#0F172A]"
-                      >
-                        Login
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        className="bg-[#0F172A] dark:bg-[#0284C7] font-bold btn-login text-white  uppercase"
-                      >
-                        Login
-                      </button>
-                    )}
+
+
+                    <button
+                      type="submit"
+                      className=" font-bold  text-white btn-login loading uppercase dark:bg-[#0284C7] bg-[#0F172A]"
+                    >
+                      Login
+                    </button>
+
 
 
                     <div>
