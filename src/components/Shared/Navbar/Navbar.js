@@ -17,6 +17,8 @@ import { ImExit } from "react-icons/im";
 import { CgProfile } from "react-icons/cg";
 import { Link } from 'react-router-dom';
 import useDarkMode from '../../../hooks/useDarkMode';
+import { useContext } from 'react';
+import { CompanyStore, useCompanyStore } from '../../../stateManagement/CompanyStore';
 
 const Navbar = () => {
     const [colorTheme, setTheme] = useDarkMode()
@@ -24,12 +26,14 @@ const Navbar = () => {
     const [navSwitch, setNavSwitch] = useState(false);
     const [userSwitch, setUserSwitch] = useState(false);
 
+
+    const { loginUser, setLoginUser } = useContext(useCompanyStore)
     // user information  code {sourav}
     const tokenInLStorage = sessionStorage.getItem("accessToken");
-    console.log("from navbar", tokenInLStorage);
 
     const handleSignOut = () => {
         sessionStorage.removeItem("accessToken", null);
+        setLoginUser(false)
         // closed user information menu bar
         setUserSwitch(false)
     }
@@ -101,7 +105,7 @@ const Navbar = () => {
                         <ul className='flex mr-[10px]'>
 
                             {
-                                !tokenInLStorage ?
+                                !loginUser ?
                                     <>
                                         <li onClick={closedNavbarAll} className='mr-4 mb-4 md:mb-0 hidden md:block'> <NavLink to="/login" className={({ isActive }) => (isActive ? active : deActive)} >Login</NavLink> </li>
 

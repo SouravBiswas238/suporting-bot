@@ -15,34 +15,37 @@ import MainAdmin from './AdminDashboard/MainAdmin/MainAdmin';
 import DashboardHome from './AdminDashboard/DashboardHome/DashboardHome';
 import AiSalesBot from './AdminDashboard/Products/AiSalesBot';
 import ChatPage from './components/Pages/ChatPage/ChatPage';
-
-
-// import { UserStoreProvider } from './stateManagement/UserContext/UserContextStore';
+import { CompanyStore } from './stateManagement/CompanyStore';
+import AuthContextProvider from './stateManagement/AuthContext';
 
 function App() {
 
   return (
     <div className='transition-all duration-500 bg-[#F3F3F3] dark:bg-[#0b1120]'>
-      {/* <UserStoreProvider> */}
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/chat" element={<ChatPage />} /> */}
-        <Route path="/register" element={<Register />} />
+      <AuthContextProvider />
+      <CompanyStore>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/chat/:id" element={<ChatPage />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/admin" element={<MainAdmin />}>
-          <Route index element={<DashboardHome />}></Route>
-          <Route path="aiSalesBot" element={<AiSalesBot />}></Route>
-        </Route>
+          <Route path="/user-dashboard" element={<MainAdmin />}>
+            <Route index element={<DashboardHome />}></Route>
+            <Route path="aiSalesBot" element={<AiSalesBot />}></Route>
+          </Route>
 
-      </Routes>
+        </Routes>
 
-      <Footer></Footer>
-      <ToastContainer autoClose={1500} />
-      {/* <ReactTooltip /> */}
+        <Footer></Footer>
+        <ToastContainer autoClose={1500} />
+        {/* <ReactTooltip /> */}
 
-      {/* </UserStoreProvider> */}
+      </CompanyStore>
+      <AuthContextProvider />
+
+
     </div >
   );
 }

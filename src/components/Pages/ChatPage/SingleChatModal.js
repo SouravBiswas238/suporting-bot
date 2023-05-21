@@ -1,10 +1,10 @@
 import Loading from '../../Shared/Loading';
 import './SingleChat.css';
 const SingleChatModal = ({ chat, chatModalId }) => {
-  // console.log(chatModalId._id)
-  if (!chat._id) {
-    return <Loading></Loading>;
-  }
+  // console.log(chatModalId.id)
+  // if (!chat.id) {
+  //   return <Loading></Loading>;
+  // }
   return (
     <div className="App">
       <label
@@ -25,9 +25,8 @@ const SingleChatModal = ({ chat, chatModalId }) => {
 
         {chat?._id !== '' ? (
           <label
-            className="btn btn-sm"
+            className="btn btn-sm text-white"
             for="my-modal-3"
-            className="btn text-white"
           >
             Join A Room
           </label>

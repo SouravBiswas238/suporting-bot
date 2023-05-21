@@ -1,53 +1,47 @@
 import axios from 'axios';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { UserStore } from '../../../stateManagement/UserContext/UserContextStore';
+import { socketLink } from '../../../utilities/links';
 import Loading from '../../Shared/Loading';
 import ChatContainer from './ChatContainer';
 import MyChat from './MyChat';
 import SingleProfile from './SingleProfile';
-import { useNavigate } from 'react-router-dom';
-import { serverLink } from './../../../utilities/links';
-
 
 
 
 const ChatPage = () => {
-    const socket = io.connect(serverLink);
 
-    const navigate = useNavigate()
-
-    const userStore = useContext(UserStore);
-    const currentUser = userStore.user;
-
-    console.log('hi');
-
-    const [currentChat, setCurrentChat] = useState('');
+    const [currentChatId, setCurrentChatId] = useState(Number);
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState('');
 
 
-    const handelSearch = () => {
-        const fetchChats = async () => {
-            const data = await axios.get(`${serverLink}/user/search-user?search=${search}`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            })
-                .then(function (res) {
-                    setSearchResult(res?.data);
-                })
-                .catch(function (err) {
-                    // (err) === true && navigate('/login')
-                })
+    // const socket = io.connect(`${socketLink}/${currentChatId}/?token=${saveToken}`);
+    // const socket = io.connect(`ws://aisalesteams.com/ws/chat/3/?token=01efac2e32d28b2c4badd63b1b868439b390eac3`);
 
-        }
-        fetchChats();
+
+
+
+    const handelSearch = () => {
+        // const fetchChats = async () => {
+        //     const data = await axios.get(`${serverLink}/user/search-user?search=${search}`, {
+        //         headers: {
+        //             authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        //         },
+        //     })
+        //         .then(function (res) {
+        //             setSearchResult(res?.data);
+        //         })
+        //         .catch(function (err) {
+        //             // (err) === true && navigate('/login')
+        //         })
+
+        // }
+        // fetchChats();
         setSearchResult("");
     }
-    // c
+
 
     return (
         <div>
@@ -60,7 +54,7 @@ const ChatPage = () => {
 
                             <div className=''>
                                 {
-                                    <MyChat setCurrentChat={setCurrentChat} ></MyChat>
+                                    <MyChat setCurrentChatId={setCurrentChatId} ></MyChat>
                                 }
                             </div>
 
@@ -68,15 +62,15 @@ const ChatPage = () => {
 
                         <div className='lg:col-span-2'>
                             <ChatContainer
-                                key={currentChat._id}
-                                currentChat={currentChat}
-                                currentUser={currentUser}
-                                socket={socket}
+                                key={currentChatId}
+                                currentChatId={currentChatId}
+                        
                             ></ChatContainer>
                         </div>
                     </div>
                 </div>
 
+                {/* sidebar for search */}
                 <div className="drawer-side">
                     <label for="my-drawer" className="drawer-overlay"></label>
                     <ul className="menu p-4 overflow-y-auto lg:w-[30%] w-[90%] bg-base-100 text-base-content">
@@ -101,12 +95,13 @@ const ChatPage = () => {
                             {
                                 searchResult ? "Search your Chat" ? searchResult?.map((chat) => <SingleProfile
                                     key={chat?._id}
-                                    setCurrentChat={setCurrentChat}
+                                    setCurrentChatId={setCurrentChatId}
                                     chat={chat} />) : <Loading></Loading> : <Loading></Loading>
                             }
                         </div>
                     </ul>
                 </div>
+
             </div>
         </div>
     );

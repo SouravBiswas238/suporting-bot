@@ -1,20 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SingleProfile from './SingleProfile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Loading from '../../Shared/Loading';
-import { FaUserCircle } from 'react-icons/fa';
-import { UserStore } from '../../../stateManagement/UserContext/UserContextStore';
+import axios from 'axios';
+import { serverLink } from '../../../utilities/links';
+import { useParams } from 'react-router-dom'
 
-const MyChat = ({ setCurrentChat }) => {
-  const userStore = useContext(UserStore);
 
-  const { user, allUser, allAdmin } = userStore;
+const MyChat = ({ setCurrentChatId }) => {
+  const [contracts, setContracts] = useState([])
+  const saveToken = sessionStorage.getItem("accessToken");
+
+  // get id from params
+  let { id } = useParams();
+
+
+  // fetch all contacts bu the user Id
+  useEffect(() => {
+    axios.get(`${serverLink}/chat/get/contacts/${id}`, {
+      headers: {
+        'Authorization': 'Token ' + saveToken,
+      }
+    }).then(response => {
+      // Handle the response data
+      setContracts(response?.data?.results);
+    })
+      .catch(error => {
+        // Handle the error
+        console.error(error);
+      });
+  }, [])
+
 
   return (
     <div className="lg:mx-2 pt-2">
-      {/* My chat header start*/}
-
+      {/* My contacts header start*/}
       <div className="flex justify-between  my-border rounded">
         <h2 className="text-3xl lg:px-2 mt-1 font-bold ">My Chats</h2>
         <div className="drawer-content text-right text-black">
@@ -27,56 +48,22 @@ const MyChat = ({ setCurrentChat }) => {
           </label>
         </div>
       </div>
-      <div className="bg-sky-500 rounded p-2 my-2 text-white flex items-center justify-between">
-        <h2 className="px-3 text-2xl">
-          User Name: {user?.username ? user?.username : user?.email}
-        </h2>
-        <div className="avatar">
-          <div className="w-[50px] rounded-full">
-            <FaUserCircle className="text-4xl mr-2 cursor-pointer" />
-          </div>
-        </div>
-      </div>
-      {/*My chat header end*/}
+      {/*My contracts header end*/}
 
-      {/* admin chat list start*/}
-      <div className="collapse collapse-arrow  my-border">
-        <input type="checkbox" className="peer" />
-        <div className="collapse-title text-primary font-2xl">Admins</div>
-        <div className="collapse-content px-1 peer-checked:bg-sky-200">
-          <div className="overflow-x-hidden   overflow-y-auto ">
-            {allAdmin && allAdmin ? (
-              allAdmin?.map((chat) => (
-                <SingleProfile
-                  key={chat?._id}
-                  setCurrentChat={setCurrentChat}
-                  chat={chat}
-                />
-              ))
-            ) : (
-              <Loading></Loading>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* admin chat list end*/}
-
-      {/* useer */}
+      {/* load all contacts  */}
       <div className="overflow-x-hidden  overflow-y-auto ">
-        {allUser && allUser ? (
-          allUser?.map((chat) => (
-            <SingleProfile
-              key={chat?._id}
-              setCurrentChat={setCurrentChat}
-              chat={chat}
-            />
-          ))
-        ) : (
-          <Loading></Loading>
-        )}
+        {
+          contracts && contracts?.length !== 0 ? (contracts?.map((contact) => <SingleProfile
+            saveToken={saveToken}
+            // key={contact?.id}
+            setCurrentChatId={setCurrentChatId}
+            contact={contact}
+          />)) : (contracts ? < Loading ></Loading> : "No contracts found")
+
+        }
+
       </div>
-    </div>
+    </div >
   );
 };
 

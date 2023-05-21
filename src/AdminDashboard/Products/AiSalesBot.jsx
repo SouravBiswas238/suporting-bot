@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai'
 import Modal from '../../components/Pages/Home/Service/MiniComponent/Modal';
 import SingleService from '../../components/Pages/Home/Service/MiniComponent/SingleService';
+import { useCompanyStore } from '../../stateManagement/CompanyStore';
+
 
 const AiSalesBot = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+
+    const company = useContext(useCompanyStore)?.company;
+    // console.log(company)
+
 
     const handleOpenModal = () => {
         setIsOpen(true);
@@ -24,7 +32,17 @@ const AiSalesBot = () => {
                 <Modal isOpen={isOpen} onClose={handleCloseModal} />
             </div>
 
-            <SingleService />
+            <div className=' flex flex-wrap justify-start'>
+                {
+                    company?.map((single) =>
+                        <SingleService key={single.id}
+                            id={single?.id}
+                            name={single?.name}
+                            whatsapp_number={single?.whatsapp_number} />
+                    )
+                }
+
+            </div>
 
         </div>
     );

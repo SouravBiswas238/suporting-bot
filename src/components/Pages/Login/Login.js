@@ -10,6 +10,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { serverLink } from '../../../utilities/links';
 import Loading from '../../Shared/Loading';
+import { CompanyStore, useCompanyStore } from '../../../stateManagement/CompanyStore';
 // import loginLottie from './login-lottie.json'
 
 const Login = () => {
@@ -46,6 +47,7 @@ const Login = () => {
   // Error State
   const navigate = useNavigate();
 
+  const { setLoginUser } = useContext(useCompanyStore);
 
   // globalUser is [user]= useAuthState(auth)
   const [showPassword, setShowPassword] = useState(false);
@@ -60,8 +62,9 @@ const Login = () => {
       const response = await axios.post(`${serverLink}/account/login/`, formData);
       console.log(response)
       response && setLoading(false)
-      // Save access token in session storage FXpGTuJC1g@&3
+      // Save access token in session storage 7nuwNVeeDh*@74
       const { key } = response.data;
+      setLoginUser(key);
       // console.log(key);
       // Save access token in session storage
       sessionStorage.setItem("accessToken", key);

@@ -2,18 +2,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Chatinput from './Chatinput';
 import { FaUserCircle } from 'react-icons/fa';
-import { serverLink } from './../../../utilities/links';
+import { serverLink, socketLink } from './../../../utilities/links';
 import Lottie from 'lottie-web';
 import lottieData from './27649-lets-chat.json';
 import Loading from '../../Shared/Loading';
 
-const ChatContainer = ({ currentChat, currentUser, socket }) => {
+const ChatContainer = ({ currentChatId }) => {
 
-
+  const saveToken = sessionStorage.getItem("accessToken");
   const [messages, setMessages] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [msgLoading, setMsgLoading] = useState(false);
+
+  const [arrivalMessage, setArrivalMessage] = useState([]);
+  const [msgLoading, setMsgLoading] = useState(true);
   const scrollRef = useRef();
+
+  // connecting to socket
+  const socket = new WebSocket(`${socketLink}/${currentChatId}/?token=${saveToken}`);
+
+  socket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    console.log(data.message)
+    const sender = data.sender;
+  };
+
   // For lottie animation
   const anime = useRef(null);
   useEffect(() => {
@@ -39,48 +50,51 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
   }, [messages]);
 
   const asyncFetchDailyData = async () => {
-    if (currentChat) {
+    if (currentChatId) {
       setMsgLoading(true);
-      const response = await axios.post(`${serverLink}/messages/getmsg`, {
-        from: currentUser._id,
-        to: currentChat._id,
-      });
-      setMessages(response?.data);
+      await axios.get(`${serverLink}/chat/get/messages/${currentChatId}`, {
+        headers: {
+          'Authorization': 'Token ' + saveToken,
+        }
+      }).then(response => {
+        // Handle the response data
+        setMessages(response?.data?.results);
+      })
+        .catch(error => {
+          // Handle the error
+          console.error(error);
+        });
+
       setMsgLoading(false);
     }
   };
 
   useEffect(() => {
     asyncFetchDailyData();
-  }, []);
+  }, [currentChatId]);
 
+  // console.log(messages)
 
 
   const handleSendMsg = async (msg) => {
-    await axios.post(`${serverLink}/messages/addmsg`, {
-      from: currentUser._id,
-      to: currentChat._id,
+    // console.log(msg)
+
+    socket.send(JSON.stringify({
       message: msg,
-    });
-
-    if (socket) {
-      socket.emit("send-msg", {
-        to: currentChat._id,
-        from: currentUser._id,
-        msg,
-      });
+      sender: 'bot'
+    }));
 
 
-      socket.on("msg-transfer", (msg) => {
-        setArrivalMessage({
-          fromSelf: true,
-          message: msg.msg
-        });
-      });
-      return () => {
-        socket.disconnect();
-      }
-    }
+    //   socket.on("msg-transfer", (msg) => {
+    //     setArrivalMessage({
+    //       fromSelf: true,
+    //       message: msg.msg
+    //     });
+    //   });
+    //   return () => {
+    //     socket.disconnect();
+    //   }
+    // }
     // if (socket) {
     //   socket.on("msg-transfer", (msg) => {
     //     setArrivalMessage({
@@ -92,17 +106,17 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     //     socket.disconnect();
     //   }
     // }
-    const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
-    setMessages(msgs);
+    // const msgs = [...messages];
+    // msgs.push({ fromSelf: true, message: msg });
+    // setMessages(msgs);
   };
 
-
+  messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at))
 
 
   return (
     <div className="w-100">
-      {currentChat && (
+      {currentChatId !== 0 && (
         <div>
           {/* chat header */}
           <div className="flex bg-sky-500 p-2 px-3 my-border rounded items-center">
@@ -113,41 +127,53 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
             </div>
             <div className="text-white px-2 uppercase">
               <h3 className="lg:text-2xl text-sm">
-                {currentChat?.username
-                  ? currentChat.username
-                  : currentChat.email}
+                Name
+
               </h3>
             </div>
           </div>
           {msgLoading ? (
             <Loading></Loading>
-          ) : (
-            <>
-              {/* chat body */}
-              <div className="message-body overflow-x-hidden  overflow-y-auto h-[calc(100vh-280px)]">
-                {messages.map((message) => {
-                  return (
-                    <div>
-                      <div
-                        className={`message ${message.fromSelf ? 'sended' : 'recieved'
-                          }`}
-                      >
-                        <div className="content ">
-                          <p>{message.message}</p>
-                        </div>
+          )
+            :
+            (
+              <>
+                {/* chat body */}
+                <div className="message-body overflow-x-hidden  overflow-y-auto h-[calc(100vh-280px)]">
+
+                  {messages?.map((message) => {
+                    return (
+                      <div>
+                        {
+                          message?.customer_message && <div
+                            className={`message ${message?.customer_message ? 'recieved' : 'sended'
+                              }`}
+                          >
+                            <div className="content ">
+                              <p>{message?.customer_message}</p>
+                            </div>
+
+                          </div>
+                        }
+                        {
+                          message?.bot_message && <div className={`message ${message?.bot_message ? 'sended' : 'recieved'}`}>
+                            <div className="content ">
+                              <p>{message?.bot_message}</p>
+                            </div>
+                          </div>
+                        }
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
+                    );
+                  })}
+                </div>
+              </>
+            )}
 
           <Chatinput handleSendMsg={handleSendMsg} />
         </div>
       )}
 
-      {currentChat === '' && (
+      {currentChatId === 0 && (
         <>
           <h2 className="text-center text-3xl my-5 font-bold">
             Select your Chat

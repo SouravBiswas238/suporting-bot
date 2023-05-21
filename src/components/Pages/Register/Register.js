@@ -49,7 +49,7 @@ const Register = () => {
       try {
         // Post data to the API
         const response = await axios.post(`${serverLink}/account/registration`, data);
-        console.log(response)
+        console.log(response);
 
         response.status && setLoading(false);
         response.status && setCustomError('');

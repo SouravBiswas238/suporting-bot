@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useFetch = (method, url, body) => {
+const useDeleteData = (method, url, body) => {
     const [isLoading, setIsLoading] = useState(false);
     const [apiData, setApiData] = useState([]);
     const [apiError, setApiError] = useState('');
@@ -20,7 +20,7 @@ const useFetch = (method, url, body) => {
                         'Authorization': 'Token ' + saveToken,
                     }
                 });
-                const data = await response?.data;
+                const data = await response;
 
                 setApiData(data);
                 setIsLoading(false);
@@ -36,4 +36,4 @@ const useFetch = (method, url, body) => {
     return { isLoading, apiData, apiError };
 };
 
-export default useFetch;
+export default useDeleteData;
