@@ -3,7 +3,6 @@ import Articles from '../Articles/Articles';
 import About from '../About/About';
 import Service from '../Service/Service';
 import Banner from './../Banner/Banner';
-import Agency from '../Agency/Agency';
 import OurTeam from '../OurTeam/OurTeam';
 import Contact from '../../Contact/Contact';
 

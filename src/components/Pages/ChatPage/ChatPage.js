@@ -1,26 +1,20 @@
-import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
-import { io } from 'socket.io-client';
-import { socketLink } from '../../../utilities/links';
+import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 import Loading from '../../Shared/Loading';
 import ChatContainer from './ChatContainer';
 import MyChat from './MyChat';
 import SingleProfile from './SingleProfile';
+import './SingleChat.css';
+
 
 
 
 const ChatPage = () => {
 
-    const [currentChatId, setCurrentChatId] = useState(Number);
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState('');
-
-
-    // const socket = io.connect(`${socketLink}/${currentChatId}/?token=${saveToken}`);
-    // const socket = io.connect(`ws://aisalesteams.com/ws/chat/3/?token=01efac2e32d28b2c4badd63b1b868439b390eac3`);
-
-
+    const { setCurrentChatId } = useContext(useCompanyStore);
 
 
     const handelSearch = () => {
@@ -53,19 +47,13 @@ const ChatPage = () => {
                         <div className="h-[calc(100vh-130px)] carousel carousel-vertical ">
 
                             <div className=''>
-                                {
-                                    <MyChat setCurrentChatId={setCurrentChatId} ></MyChat>
-                                }
+                                <MyChat ></MyChat>
                             </div>
 
                         </div>
 
                         <div className='lg:col-span-2'>
-                            <ChatContainer
-                                key={currentChatId}
-                                currentChatId={currentChatId}
-                        
-                            ></ChatContainer>
+                            <ChatContainer />
                         </div>
                     </div>
                 </div>

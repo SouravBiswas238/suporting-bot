@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import Chatinput from './Chatinput';
 import { FaUserCircle } from 'react-icons/fa';
@@ -6,27 +6,59 @@ import { serverLink, socketLink } from './../../../utilities/links';
 import Lottie from 'lottie-web';
 import lottieData from './27649-lets-chat.json';
 import Loading from '../../Shared/Loading';
+import { useCompanyStore } from '../../../stateManagement/CompanyStore';
+import { animateScroll } from 'react-scroll';
 
-const ChatContainer = ({ currentChatId }) => {
-
+const ChatContainer = () => {
   const saveToken = sessionStorage.getItem("accessToken");
   const [messages, setMessages] = useState([]);
-
-  const [arrivalMessage, setArrivalMessage] = useState([]);
   const [msgLoading, setMsgLoading] = useState(true);
-  const scrollRef = useRef();
+  const [arrivalMessage, setArrivalMessage] = useState([]);
+  const messageContainerRef = useRef(null);
 
-  // connecting to socket
-  const socket = new WebSocket(`${socketLink}/${currentChatId}/?token=${saveToken}`);
 
-  socket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
-    console.log(data.message)
-    const sender = data.sender;
+  const scrollToBottom = () => {
+    animateScroll.scrollToBottom({
+      containerId: 'messageContainer',
+      duration: 500,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
   };
+  useEffect(() => {
+    // Scroll to bottom when a new message arrives
+    scrollToBottom();
+  }, [messages, arrivalMessage]);
 
-  // For lottie animation
-  const anime = useRef(null);
+
+  // from context
+  const { currentChatId, currentChatName } = useContext(useCompanyStore);
+
+  useEffect(() => {
+    const fetchChatMessages = async () => {
+      if (currentChatId) {
+        setMsgLoading(true);
+        try {
+          const response = await axios.get(`${serverLink}/chat/get/messages/${currentChatId}`, {
+            headers: {
+              'Authorization': 'Token ' + saveToken,
+            },
+          });
+          setMessages(response?.data?.results);
+        } catch (error) {
+          console.error(error);
+        }
+        setMsgLoading(false);
+      }
+    };
+
+    fetchChatMessages();
+  }, [currentChatId]);
+
+  useEffect(() => {
+    setArrivalMessage([]); // Set the state to an empty array when the ID changes
+  }, [currentChatId]);
+
   useEffect(() => {
     Lottie.loadAnimation({
       container: anime.current,
@@ -38,81 +70,42 @@ const ChatContainer = ({ currentChatId }) => {
         preserveAspectRatio: 'xMidYMid slice',
       },
     });
-    // More logic goes here
   }, []);
 
-  useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
+  const anime = useRef(null);
+  const socket = useRef(null);
 
+  // fetch all chat and connect socket
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behaviour: 'smooth' });
-  }, [messages]);
-
-  const asyncFetchDailyData = async () => {
     if (currentChatId) {
-      setMsgLoading(true);
-      await axios.get(`${serverLink}/chat/get/messages/${currentChatId}`, {
-        headers: {
-          'Authorization': 'Token ' + saveToken,
-        }
-      }).then(response => {
-        // Handle the response data
-        setMessages(response?.data?.results);
-      })
-        .catch(error => {
-          // Handle the error
-          console.error(error);
-        });
+      socket.current = new WebSocket(`${socketLink}/${currentChatId}/?token=${saveToken}`);
 
-      setMsgLoading(false);
+      socket.current.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        const sender = data?.sender;
+        const bot_message = data?.message;
+        setArrivalMessage(prevArrivalMessages => [...prevArrivalMessages, { bot_message, sender }]);
+      };
+    }
+
+    return () => {
+      if (socket.current) {
+        socket.current.close();
+      }
+    };
+  }, [currentChatId, saveToken]);
+
+  // send message to the socket
+  const handleSendMsg = async (msg) => {
+    if (socket.current) {
+      socket.current.send(JSON.stringify({
+        'message': msg,
+        'sender': 'bot',
+      }));
     }
   };
-
-  useEffect(() => {
-    asyncFetchDailyData();
-  }, [currentChatId]);
-
-  // console.log(messages)
-
-
-  const handleSendMsg = async (msg) => {
-    // console.log(msg)
-
-    socket.send(JSON.stringify({
-      message: msg,
-      sender: 'bot'
-    }));
-
-
-    //   socket.on("msg-transfer", (msg) => {
-    //     setArrivalMessage({
-    //       fromSelf: true,
-    //       message: msg.msg
-    //     });
-    //   });
-    //   return () => {
-    //     socket.disconnect();
-    //   }
-    // }
-    // if (socket) {
-    //   socket.on("msg-transfer", (msg) => {
-    //     setArrivalMessage({
-    //       fromSelf: true,
-    //       message: msg.msg
-    //     });
-    //   });
-    //   return () => {
-    //     socket.disconnect();
-    //   }
-    // }
-    // const msgs = [...messages];
-    // msgs.push({ fromSelf: true, message: msg });
-    // setMessages(msgs);
-  };
-
-  messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at))
-
+  // for message sorting to the update date
+  messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at));
 
   return (
     <div className="w-100">
@@ -126,58 +119,62 @@ const ChatContainer = ({ currentChatId }) => {
               </div>
             </div>
             <div className="text-white px-2 uppercase">
-              <h3 className="lg:text-2xl text-sm">
-                Name
-
-              </h3>
+              <h3 className="lg:text-2xl text-sm">{currentChatName}</h3>
             </div>
           </div>
           {msgLoading ? (
             <Loading></Loading>
-          )
-            :
-            (
-              <>
-                {/* chat body */}
-                <div className="message-body overflow-x-hidden  overflow-y-auto h-[calc(100vh-280px)]">
-
-                  {messages?.map((message) => {
-                    return (
-                      <div>
-                        {
-                          message?.customer_message && <div
-                            className={`message ${message?.customer_message ? 'recieved' : 'sended'
-                              }`}
-                          >
-                            <div className="content ">
-                              <p>{message?.customer_message}</p>
-                            </div>
-
+          ) : (
+            <>
+              {/* chat body */}
+              <div id="messageContainer" ref={messageContainerRef} className="message-body overflow-x-hidden overflow-y-auto h-[calc(100vh-240px)]">
+                {messages?.map((message) => {
+                  return (
+                    <div>
+                      {message?.customer_message && (
+                        <div
+                          className={`message ${message?.customer_message ? 'recieved' : 'sended'}`}
+                        >
+                          <div className="content">
+                            <p>{message?.customer_message}</p>
                           </div>
-                        }
-                        {
-                          message?.bot_message && <div className={`message ${message?.bot_message ? 'sended' : 'recieved'}`}>
-                            <div className="content ">
-                              <p>{message?.bot_message}</p>
-                            </div>
+                        </div>
+                      )}
+                      {message?.bot_message && (
+                        <div className={`message ${message?.bot_message ? 'sended' : 'recieved'}`}>
+                          <div className="content">
+                            <p>{message?.bot_message}</p>
                           </div>
-                        }
-                      </div>
-                    );
-                  })}
-                </div>
-              </>
-            )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                {/* for arrival message */}
+                {arrivalMessage?.map((message) => {
+                  return (
+                    <div>
+                      {message?.bot_message && (
+                        <div className="message sended">
+                          <div className="content">
+                            <p>{message?.bot_message}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
 
           <Chatinput handleSendMsg={handleSendMsg} />
         </div>
       )}
-
+      {/* when not selecting the chat id thek show the section */}
       {currentChatId === 0 && (
         <>
-          <h2 className="text-center text-3xl my-5 font-bold">
-            Select your Chat
-          </h2>
+          <h2 className="text-center text-3xl my-5 font-bold">Select your Chat</h2>
 
           <div
             className="overflow-hidden mx-auto"

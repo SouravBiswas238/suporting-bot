@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import useDeleteData from '../hooks/useDeleteData';
 import useFetch from '../hooks/useFetch';
-import { serverLink } from '../utilities/links';
+import { serverLink, socketLink } from '../utilities/links';
 
 const CompanyStore = createContext();
 
@@ -12,6 +12,13 @@ const CompanyStoreProvider = ({ children }) => {
     const [data, setData] = useState({});
     const [company, setCompany] = useState([]);
     const [deleteId, setDeleteID] = useState(Number);
+    // messge
+    const [currentChatId, setCurrentChatId] = useState(Number);
+    const [currentChatName, setCurrentChatName] = useState('');
+
+
+    // console.log(currentChatId)
+
 
     const saveToken = sessionStorage.getItem("accessToken");
 
@@ -52,6 +59,8 @@ const CompanyStoreProvider = ({ children }) => {
 
 
 
+
+ 
     //this state stored user data  //==> Don't move this one !
     const companyData = {
         company,
@@ -61,6 +70,12 @@ const CompanyStoreProvider = ({ children }) => {
         apiError,
         loginUser,
         setLoginUser,
+        setCurrentChatId,
+        setCurrentChatName,
+        currentChatId,
+        currentChatName,
+        
+      
 
     };
     //user context provider component //==> Don't move this one !

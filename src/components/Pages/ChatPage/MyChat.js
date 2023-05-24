@@ -8,7 +8,7 @@ import { serverLink } from '../../../utilities/links';
 import { useParams } from 'react-router-dom'
 
 
-const MyChat = ({ setCurrentChatId }) => {
+const MyChat = () => {
   const [contracts, setContracts] = useState([])
   const saveToken = sessionStorage.getItem("accessToken");
 
@@ -16,21 +16,25 @@ const MyChat = ({ setCurrentChatId }) => {
   let { id } = useParams();
 
 
-  // fetch all contacts bu the user Id
   useEffect(() => {
-    axios.get(`${serverLink}/chat/get/contacts/${id}`, {
-      headers: {
-        'Authorization': 'Token ' + saveToken,
-      }
-    }).then(response => {
-      // Handle the response data
-      setContracts(response?.data?.results);
-    })
-      .catch(error => {
+    const fetchContacts = async () => {
+      try {
+        const response = await axios.get(`${serverLink}/chat/get/contacts/${id}`, {
+          headers: {
+            'Authorization': 'Token ' + saveToken,
+          }
+        });
+        // Handle the response data
+        setContracts(response?.data?.results);
+      } catch (error) {
         // Handle the error
         console.error(error);
-      });
-  }, [])
+      }
+    };
+
+    fetchContacts();
+  }, [id]);
+
 
 
   return (
@@ -56,7 +60,6 @@ const MyChat = ({ setCurrentChatId }) => {
           contracts && contracts?.length !== 0 ? (contracts?.map((contact) => <SingleProfile
             saveToken={saveToken}
             // key={contact?.id}
-            setCurrentChatId={setCurrentChatId}
             contact={contact}
           />)) : (contracts ? < Loading ></Loading> : "No contracts found")
 
