@@ -32,7 +32,7 @@ const SingleProfile = ({ contact }) => {
             <p className="font-bold text-sm">
 
               <span className="font-normal">
-                {contact?.latest_message_text.length >= 120 ? contact?.latest_message_text.slice(0, 120) + "  ..." : contact?.latest_message_text}
+                {contact?.latest_message_text.length >= 57 ? contact?.latest_message_text.slice(0, 57) + "....." : contact?.latest_message_text}
 
 
               </span>{' '}
