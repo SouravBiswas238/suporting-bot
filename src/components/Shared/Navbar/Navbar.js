@@ -76,7 +76,7 @@ const Navbar = () => {
                         <ul className='md:flex bg-[#F3F3F3] dark:bg-[#0C1322] text-gray-900 dark:text-gray-200 border-x-2 border-b-2 md:border-0 border-gray-200 dark:border-gray-700 pl-3 md:pl-0 py-5 md:py-0 w-full md:w-auto'>
 
                             <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/" className={({ isActive }) => (isActive ? active : deActive)} ><AiFillHome className='md:hidden text-base mr-2 ' />Home</NavLink> </li>
-                            <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/resource" className={({ isActive }) => (isActive ? active : deActive)} ><BsTools className='md:hidden text-base mr-2' /> Resource</NavLink> </li>
+                            {/* <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/resource" className={({ isActive }) => (isActive ? active : deActive)} ><BsTools className='md:hidden text-base mr-2' /> Resource</NavLink> </li> */}
                             <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8'> <NavLink to="/contactUs" className={({ isActive }) => (isActive ? active : deActive)} > <MdOutlineConnectWithoutContact className='md:hidden text-base mr-2' /> Contact US</NavLink> </li>
                             {/* <li onClick={closedNavbarAll} className='mr-5 mb-4 md:mb-0 dark:text-[#c6c9d8]'> <NavLink to="/chat" className={({ isActive }) => (isActive ? active : deActive)} > <MdOutlineConnectWithoutContact className='md:hidden text-base mr-2' /> Chat</NavLink> </li> */}
 

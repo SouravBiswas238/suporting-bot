@@ -60,7 +60,7 @@ const CompanyStoreProvider = ({ children }) => {
 
 
 
- 
+
     //this state stored user data  //==> Don't move this one !
     const companyData = {
         company,
@@ -74,8 +74,8 @@ const CompanyStoreProvider = ({ children }) => {
         setCurrentChatName,
         currentChatId,
         currentChatName,
-        
-      
+
+
 
     };
     //user context provider component //==> Don't move this one !

@@ -30,6 +30,9 @@ const useDeleteData = (method, url, body) => {
             }
         };
 
+        if (body) {
+            fetchData();
+        }
         fetchData();
     }, [url, method, body]);
 

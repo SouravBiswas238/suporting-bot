@@ -24,7 +24,7 @@ const MainAdmin = () => {
       </div>
 
       {/* admin component render */}
-      <div className={`bg-[#f3f3f3]  dark:bg-[#0b1120] min-w-[83%] w-full p-5`}>
+      <div className={`bg-[#f3f3f3]  dark:bg-[#0b1120] min-w-[83%] w-full lg:p-5 p-2`}>
         <Outlet></Outlet>
       </div>
     </section>

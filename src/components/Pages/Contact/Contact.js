@@ -36,8 +36,8 @@ const Contact = () => {
         // More logic goes here
     }, []);
     return (
-        <div className='container  mx-auto '>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4  bg-white dark:bg-[#0b1120] mb-10 pb-10">
+        <div className='container  mx-auto pt-12'>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4  bg-white dark:bg-[#0b1120] my-10 pb-10">
                 <div>
                     <form ref={form} onSubmit={handelSubmitFrom}>
                         <div className="p-6 rounded-sm w-full">
@@ -92,7 +92,7 @@ const Contact = () => {
                             <div className='w-[40px] h-[40px]  mr-3 rounded-full flex justify-center items-center border border-indigo-600'>
                                 <ImLocation2 className='text-xl dark:text-[#38BDF8] text-[#0F172A]' />
                             </div>
-                            502 Washington Aveneo</li>
+                            106 North Dhaka</li>
 
 
                         <li className='flex items-center mb-8  para-color text-[17px] font-semibold dark:text-[#38BDF8]'>
@@ -100,7 +100,7 @@ const Contact = () => {
                                 <MdEmail className='text-xl text-[#0F172A] dark:text-[#38BDF8] ' />
                             </div>
 
-                            thecreativeganag@gmail.com</li>
+                            aisalesteam@gmail.com</li>
 
                         <li className='flex items-center mb-8 para-color text-[17px] font-semibold dark:text-[#38BDF8] text-[#38BDF8] '>
                             <div className='w-[40px] h-[40px]  mr-3 rounded-full flex justify-center items-center border border-indigo-600'>
@@ -108,7 +108,7 @@ const Contact = () => {
 
                             </div>
 
-                            +88018907908390</li>
+                            +8801850175823</li>
                     </ul>
                 </div>
             </div>

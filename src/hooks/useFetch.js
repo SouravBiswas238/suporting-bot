@@ -30,7 +30,9 @@ const useFetch = (method, url, body) => {
             }
         };
 
-        fetchData();
+        if (body) {
+            fetchData();
+        }
     }, [url, method, body]);
 
     return { isLoading, apiData, apiError };

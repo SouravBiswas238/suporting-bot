@@ -50,11 +50,11 @@ const Banner = () => {
             <img
               alt="nai"
               src={heroImg}
-              className=" scale-90 rounded-[350px] pl-[8rem] relative"
+              className=" scale-90 lg:rounded-[350px] rounded-[146px] pl-[4rem] lg:pl-[8rem] relative"
             />
             <img
               src={heroImgLogo}
-              className="absolute bottom-[8rem] right-[27.1rem]"
+              className="absolute bottom-[8rem] lg:flex hidden lg:right-[22.1rem] right-[14.1rem]"
               alt=""
             />
           </div>

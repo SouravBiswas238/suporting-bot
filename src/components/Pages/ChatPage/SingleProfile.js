@@ -45,7 +45,7 @@ const SingleProfile = ({ contact }) => {
 
 
     </div>
-  );
+  );                                      
 };
 
 export default SingleProfile;

@@ -59,6 +59,7 @@ const ChatContainer = () => {
     setArrivalMessage([]); // Set the state to an empty array when the ID changes
   }, [currentChatId]);
 
+  // lottie animation
   useEffect(() => {
     Lottie.loadAnimation({
       container: anime.current,
@@ -154,8 +155,8 @@ const ChatContainer = () => {
                 {arrivalMessage?.map((message) => {
                   return (
                     <div>
-                      {message?.bot_message && (
-                        <div className="message sended">
+                      {message?.sender && (
+                        <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
                           <div className="content">
                             <p>{message?.bot_message}</p>
                           </div>
