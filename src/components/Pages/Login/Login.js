@@ -238,7 +238,7 @@ const Login = () => {
                 }}
                 ref={anime}
               ></div>
-              ;
+              
             </div>
           </div>
         </div>

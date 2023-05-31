@@ -1,32 +1,49 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCompanyStore } from '../../../../../stateManagement/CompanyStore';
+import { toast } from 'react-toastify';
 
 
-const Modal = ({ isOpen, onClose }) => {
+const EditModal = ({ singleCompany, isOpen, onClose }) => {
     const {
         register,
         formState: { errors },
         handleSubmit,
+        setValue,
         reset
     } = useForm();
 
-    const { setData } = useContext(useCompanyStore);
+
+    const { setEditData, updatedData } = useContext(useCompanyStore);
 
     const onSubmit = async (data) => {
-        setData(data);
-        reset();
+        // console.log(data)
+        setEditData(data);
+        reset({});
+
+        if (updatedData.status === 200) {
+            toast.success("Data updated successfully")
+        }
     }
+    useEffect(() => {
+        // Initialize the form with default data from the company
+        setValue('name', singleCompany?.name);
+        setValue('whatsapp_number', singleCompany?.whatsapp_number);
+        setValue('about', singleCompany?.about);
+        setValue('faq', singleCompany?.faq);
+        setValue('inventory', singleCompany?.inventory);
+
+    }, [singleCompany, setValue]);
+
     return (
         <div className={` z-10 mx-5 rounded-lg absolute w-[70%]  bg-white dark:bg-[#182133]  transition-all duration-500 shadow-lg dark:text-gray-100  ${isOpen ? 'block' : 'hidden'}`}>
             <div className='relative mt-5'>
                 {/* Your modal content here */}
                 <label onClick={onClose} className="dark:text-[#E2E8F0]  flex items-center justify-center border-2 border-primary text-2xl btn-circle absolute right-2 top-0">✕</label>
-                <h2 className="text-2xl font-semibold dark:text-[#E2E8F0] text-center ">Fill the form to create a Company</h2>
+                <h2 className="text-2xl font-semibold dark:text-[#E2E8F0] text-center ">Edit the form for {singleCompany?.name}</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="card-body">
-
                         {/* user name   */}
                         <div className="form-control ">
                             <label className="label">
@@ -36,7 +53,7 @@ const Modal = ({ isOpen, onClose }) => {
                             </label>
                             <input
                                 type="text"
-                                placeholder="Name"
+                                defaultValue={singleCompany?.name}
                                 className="input-customize dark:border-[#0D1425]  
                                     dark:bg-[#1E293B] dark:text-white dark:outline-0"
                                 {...register('name', { required: true })}
@@ -58,6 +75,7 @@ const Modal = ({ isOpen, onClose }) => {
                             <textarea
                                 className="input-customize dark:border-[#0D1425]  
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
+                                defaultValue={singleCompany?.whatsapp_number}
                                 {...register("whatsapp_number", {
                                     maxLength: {
                                         value: 100,
@@ -81,6 +99,7 @@ const Modal = ({ isOpen, onClose }) => {
                             <textarea
                                 className="input-customize dark:border-[#0D1425]  
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
+                                defaultValue={singleCompany?.about}
                                 {...register("about", {
                                     maxLength: {
                                         value: 300,
@@ -106,16 +125,18 @@ const Modal = ({ isOpen, onClose }) => {
                             <textarea
                                 className="input-customize dark:border-[#0D1425]  
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
+                                defaultValue={singleCompany?.faq}
+
                                 {...register("faq", {
                                     maxLength: {
-                                        value: 900,
+                                        value: 950,
                                         message: 'error message'
                                     }
                                 })}
                             />
                             {errors?.faq?.message && (
                                 <span className="label-text-alt text-red-500 text-lg">
-                                    Max 900 word
+                                    Max 950 word
                                 </span>
                             )}
                         </div>
@@ -128,6 +149,8 @@ const Modal = ({ isOpen, onClose }) => {
                             <textarea
                                 className="input-customize-textarea dark:border-[#0D1425]  
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
+                                defaultValue={singleCompany?.inventory}
+
                                 {...register("inventory ", {
                                     maxLength: {
                                         value: 950,
@@ -154,4 +177,4 @@ const Modal = ({ isOpen, onClose }) => {
     );
 };
 
-export default Modal;
+export default EditModal;

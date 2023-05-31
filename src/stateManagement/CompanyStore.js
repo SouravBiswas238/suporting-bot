@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import useDeleteData from '../hooks/useDeleteData';
 import useFetch from '../hooks/useFetch';
-import { serverLink, socketLink } from '../utilities/links';
+import useUpdate from '../hooks/useUpdate';
+import { serverLink } from '../utilities/links';
 
 const CompanyStore = createContext();
 
@@ -12,20 +13,24 @@ const CompanyStoreProvider = ({ children }) => {
     const [data, setData] = useState({});
     const [company, setCompany] = useState([]);
     const [deleteId, setDeleteID] = useState(Number);
+    // edit company own data
+    const [editData, setEditData] = useState({});
+    const [editId, setEditID] = useState(Number);
+
     // messge
     const [currentChatId, setCurrentChatId] = useState(Number);
     const [currentChatName, setCurrentChatName] = useState('');
 
 
-    // console.log(currentChatId)
 
 
     const saveToken = sessionStorage.getItem("accessToken");
 
     const { isLoading, apiData, apiError } = useFetch('POST', `${serverLink}/company/create`, data);
-
     const { status } = useDeleteData('DELETE', `${serverLink}/company/delete/${deleteId}`).apiData;
 
+    // update company own data
+    const { updatedData } = useUpdate('PATCH', `${serverLink}/company/update/${editId}`, editData);
 
 
     // to get company data data
@@ -43,8 +48,8 @@ const CompanyStoreProvider = ({ children }) => {
                 // Handle the error
                 console.error(error);
             });
-    }, [saveToken, apiData, status])
-
+    }, [saveToken, apiData, status, updatedData])
+ 
     // user auth context
     const [loginUser, setLoginUser] = useState(false)
     const initializeAccessToken = () => {
@@ -63,9 +68,12 @@ const CompanyStoreProvider = ({ children }) => {
 
     //this state stored user data  //==> Don't move this one !
     const companyData = {
+        saveToken,
         company,
         setData,
         setDeleteID,
+        setEditID,
+        updatedData,
         isLoading,
         apiError,
         loginUser,
@@ -74,6 +82,7 @@ const CompanyStoreProvider = ({ children }) => {
         setCurrentChatName,
         currentChatId,
         currentChatName,
+        setEditData
 
 
 

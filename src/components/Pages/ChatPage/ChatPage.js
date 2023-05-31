@@ -9,7 +9,6 @@ import './SingleChat.css';
 
 
 
-
 const ChatPage = () => {
 
     const [search, setSearch] = useState('');

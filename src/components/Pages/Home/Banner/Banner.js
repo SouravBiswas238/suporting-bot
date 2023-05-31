@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../Home/Home.css';
-import heroImg from '../../../../images/banner-ai.jpg';
-import heroImgLogo from '../../../../images/cerLogo.png';
-import { useNavigate } from 'react-router-dom';
+// import heroImg from '../../../../images/banner-img.jpg';
+// import heroImgLogo from '../../../../images/cerLogo.png';
+import aiBanner from './Ai-banner.json'
 import './Banner.css';
+import Lottie from 'lottie-web';
 
 const Banner = () => {
-  // navigate for developer
-  const navigateDeveloper = useNavigate();
-  //navigate for recruiter
+  // const heroImg = 'https://i.ibb.co/LJTqTzj/ai-robot-frame-technology-abstract-futuristic-tech-design-with-blank-space.jpg'
 
-  const navigateRecruiter = useNavigate();
+  // for lottie
+  const anime = useRef(null);
+  useEffect(() => {
+    Lottie.loadAnimation({
+      container: anime.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: aiBanner,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice',
+      },
+    });
+    // More logic goes here
+  }, []);
   return (
     <div className=" bg-[#F3F3F3] md:h-[110vh] h-full relative pb-[8rem] pt-[6rem] md:p-0 dark:bg-[#0b1120]">
       <div className=" h-full w-[95%] md:w-[75%] mx-auto ">
@@ -46,17 +59,18 @@ const Banner = () => {
               </div>
             </div>
           </div>
-          <div className="hidden  md:flex justify-center items-center">
-            <img
-              alt="nai"
-              src={heroImg}
-              className=" scale-90 lg:rounded-[350px] rounded-[146px] pl-[4rem] lg:pl-[8rem] relative"
-            />
-            <img
-              src={heroImgLogo}
-              className="absolute bottom-[8rem] lg:flex hidden lg:right-[22.1rem] right-[14.1rem]"
-              alt=""
-            />
+          <div className="hidden w-full  md:flex justify-center items-center">
+            <div
+              className=" md:h-[300px] lg:h-[420px]"
+              style={{
+                // height: '300px',
+                width: '100%',
+                overflow: 'hidden',
+                outline: 'none',
+                margin: '0 auto',
+              }}
+              ref={anime}
+            ></div>
           </div>
         </section>
 
