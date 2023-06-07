@@ -32,7 +32,6 @@ const CompanyStoreProvider = ({ children }) => {
     // update company own data
     const { updatedData } = useUpdate('PATCH', `${serverLink}/company/update/${editId}`, editData);
 
-
     // to get company data data
     useEffect(() => {
         axios.get(`${serverLink}/company/get/owned`, {
@@ -49,7 +48,7 @@ const CompanyStoreProvider = ({ children }) => {
                 console.error(error);
             });
     }, [saveToken, apiData, status, updatedData])
- 
+
     // user auth context
     const [loginUser, setLoginUser] = useState(false)
     const initializeAccessToken = () => {

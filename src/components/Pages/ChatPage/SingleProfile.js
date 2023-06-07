@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 
@@ -9,6 +8,7 @@ const SingleProfile = ({ contact }) => {
 
 
   const { setCurrentChatId, setCurrentChatName } = useContext(useCompanyStore);
+
 
   const singleUserSelect = async (contactId, contactName) => {
     setCurrentChatId(contactId)
@@ -25,10 +25,16 @@ const SingleProfile = ({ contact }) => {
               <FaUserCircle className="text-4xl mr-2 cursor-pointer" />
             </div>
           </div>
-          <div className="mx-2 my-auto">
-            <h2 className="py-0 uppercase font-semibold">
-              {contact?.customer}
-            </h2>
+          <div className="mx-2 my-auto w-[400px]">
+            <div className='flex items-center justify-between'>
+
+              <h2 className="py-0 uppercase font-semibold">
+                {contact?.customer}
+              </h2>
+
+           
+            </div>
+
             <p className="font-bold text-sm">
 
               <span className="font-normal">
@@ -45,7 +51,7 @@ const SingleProfile = ({ contact }) => {
 
 
     </div>
-  );                                      
+  );
 };
 
 export default SingleProfile;

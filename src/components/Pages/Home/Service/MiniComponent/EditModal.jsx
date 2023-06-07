@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCompanyStore } from '../../../../../stateManagement/CompanyStore';
 import { toast } from 'react-toastify';
+import Loading from '../../../../Shared/Loading';
 
 
 const EditModal = ({ singleCompany, isOpen, onClose }) => {
@@ -14,15 +15,16 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
     } = useForm();
 
 
-    const { setEditData, updatedData } = useContext(useCompanyStore);
+    const { setEditData, updatedData, isLoading, apiError } = useContext(useCompanyStore);
 
     const onSubmit = async (data) => {
-        // console.log(data)
+
         setEditData(data);
         reset({});
 
         if (updatedData.status === 200) {
-            toast.success("Data updated successfully")
+            toast.success("Data updated successfully");
+            onClose();
         }
     }
     useEffect(() => {
@@ -34,6 +36,12 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
         setValue('inventory', singleCompany?.inventory);
 
     }, [singleCompany, setValue]);
+
+    if (isLoading) {
+        onClose()
+        return <Loading />
+    }
+
 
     return (
         <div className={` z-10 mx-5 rounded-lg absolute w-[70%]  bg-white dark:bg-[#182133]  transition-all duration-500 shadow-lg dark:text-gray-100  ${isOpen ? 'block' : 'hidden'}`}>
@@ -78,8 +86,13 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
                                 defaultValue={singleCompany?.whatsapp_number}
                                 {...register("whatsapp_number", {
                                     maxLength: {
-                                        value: 100,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 100 || 'Max 100 words';
+                                        }
                                     }
                                 })}
                             />
@@ -102,8 +115,13 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
                                 defaultValue={singleCompany?.about}
                                 {...register("about", {
                                     maxLength: {
-                                        value: 300,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 300 || 'Max 300 words';
+                                        }
                                     }
                                 })}
                             />
@@ -129,14 +147,19 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
 
                                 {...register("faq", {
                                     maxLength: {
-                                        value: 950,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 900 || 'Max 900 words';
+                                        }
                                     }
                                 })}
                             />
                             {errors?.faq?.message && (
                                 <span className="label-text-alt text-red-500 text-lg">
-                                    Max 950 word
+                                    Max 900 word
                                 </span>
                             )}
                         </div>
@@ -151,10 +174,15 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
                                 defaultValue={singleCompany?.inventory}
 
-                                {...register("inventory ", {
+                                {...register("inventory", {
                                     maxLength: {
-                                        value: 950,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 950 || 'Max 950 words';
+                                        }
                                     }
                                 })}
                             />
@@ -165,7 +193,7 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
                             )}
                         </div>
 
-                        <input onClick={onClose} className='bg-[#0F172A] dark:bg-[#0284C7] font-bold  text-white  uppercase btn btn-primary-blue' type="submit" />
+                        <input className='bg-[#0F172A] dark:bg-[#0284C7] font-bold  text-white  uppercase btn btn-primary-blue' type="submit" />
 
                     </div>
                 </form>

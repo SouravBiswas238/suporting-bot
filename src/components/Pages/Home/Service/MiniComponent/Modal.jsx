@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCompanyStore } from '../../../../../stateManagement/CompanyStore';
+import Loading from '../../../../Shared/Loading';
 
 
 const Modal = ({ isOpen, onClose }) => {
@@ -11,12 +12,38 @@ const Modal = ({ isOpen, onClose }) => {
         reset
     } = useForm();
 
-    const { setData } = useContext(useCompanyStore);
+    const { setData, isLoading, apiData, apiError } = useContext(useCompanyStore);
+    if (isLoading) {
+        onClose()
+        return <Loading />
+    }
+    if (apiData) {
+        console.log(apiData)
+    }
 
     const onSubmit = async (data) => {
         setData(data);
         reset();
     }
+
+    // let content = "";
+    // if (isLoading || isFetching) {
+    //   content = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((key) => (
+    //     <SingleProductCartLoading key={key} />
+    //   ));
+    // } else if (!isLoading && !isFetching && isError) {
+    //   content = <div>is Error</div>;
+    // } else if (
+    //   !isLoading &&
+    //   !isFetching &&
+    //   !isError &&
+    //   allProducts?.length === 0
+    // ) {
+    //   content = <div>No Product Found</div>;
+    // } else {
+    //   content = allProducts?.data?.map((product, key) => (
+    //     <SingleProductCart key={key} product={product} />
+    //   ));
     return (
         <div className={` z-10 mx-5 rounded-lg absolute w-[70%]  bg-white dark:bg-[#182133]  transition-all duration-500 shadow-lg dark:text-gray-100  ${isOpen ? 'block' : 'hidden'}`}>
             <div className='relative mt-5'>
@@ -49,28 +76,33 @@ const Modal = ({ isOpen, onClose }) => {
                             )}
                         </div>
                         {/* contact */}
-                        <div className="form-control ">
+                        <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold dark:text-[#8C9BB6] text-[#334155]">
                                     Contact
                                 </span>
                             </label>
                             <textarea
-                                className="input-customize dark:border-[#0D1425]  
-                                   dark:bg-[#1E293B] dark:text-white dark:outline-0"
+                                className="input-customize dark:border-[#0D1425] dark:bg-[#1E293B] dark:text-white dark:outline-0"
                                 {...register("whatsapp_number", {
                                     maxLength: {
-                                        value: 100,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 100 || 'Max 100 words';
+                                        }
                                     }
                                 })}
                             />
                             {errors?.whatsapp_number?.message && (
                                 <span className="label-text-alt text-red-500 text-lg">
-                                    Max 100 word
+                                    {errors.whatsapp_number.message}
                                 </span>
                             )}
                         </div>
+
                         {/* about */}
                         <div className="form-control ">
                             <label className="label">
@@ -83,8 +115,13 @@ const Modal = ({ isOpen, onClose }) => {
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
                                 {...register("about", {
                                     maxLength: {
-                                        value: 300,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 300 || 'Max 300 words';
+                                        }
                                     }
                                 })}
                             />
@@ -108,8 +145,13 @@ const Modal = ({ isOpen, onClose }) => {
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
                                 {...register("faq", {
                                     maxLength: {
-                                        value: 900,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 900 || 'Max 900 words';
+                                        }
                                     }
                                 })}
                             />
@@ -128,10 +170,15 @@ const Modal = ({ isOpen, onClose }) => {
                             <textarea
                                 className="input-customize-textarea dark:border-[#0D1425]  
                                    dark:bg-[#1E293B] dark:text-white dark:outline-0"
-                                {...register("inventory ", {
+                                {...register("inventory", {
                                     maxLength: {
-                                        value: 950,
                                         message: 'error message'
+                                    },
+                                    validate: {
+                                        wordCount: value => {
+                                            const wordArray = value.trim().split(/\s+/);
+                                            return wordArray.length <= 950 || 'Max 950 words';
+                                        }
                                     }
                                 })}
                             />
@@ -140,9 +187,10 @@ const Modal = ({ isOpen, onClose }) => {
                                     Max 950 word
                                 </span>
                             )}
+
                         </div>
 
-                        <input onClick={onClose} className='bg-[#0F172A] dark:bg-[#0284C7] font-bold  text-white  uppercase btn btn-primary-blue' type="submit" />
+                        <input className='bg-[#0F172A] mt-10 dark:bg-[#0284C7] font-bold  text-white  uppercase btn btn-primary-blue' type="submit" />
 
                     </div>
                 </form>
@@ -155,3 +203,4 @@ const Modal = ({ isOpen, onClose }) => {
 };
 
 export default Modal;
+

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import Chatinput from './Chatinput';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaEllipsisV, FaUserCircle } from 'react-icons/fa';
 import { serverLink, socketLink } from './../../../utilities/links';
 import Lottie from 'lottie-web';
 import lottieData from './27649-lets-chat.json';
 import Loading from '../../Shared/Loading';
 import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 import { animateScroll } from 'react-scroll';
+import ChatContainerHeader from './miniComponent/ChatContainerHeader';
 
 const ChatContainer = () => {
   const saveToken = sessionStorage.getItem("accessToken");
@@ -113,16 +114,12 @@ const ChatContainer = () => {
       {currentChatId !== 0 && (
         <div>
           {/* chat header */}
-          <div className="flex bg-sky-500 p-2 px-3 my-border rounded items-center">
-            <div className="avatar">
-              <div className="w-[50px] rounded-full">
-                {<FaUserCircle className="text-4xl mr-2 cursor-pointer" />}
-              </div>
-            </div>
-            <div className="text-white px-2 uppercase">
-              <h3 className="lg:text-2xl text-sm">{currentChatName}</h3>
-            </div>
-          </div>
+          <ChatContainerHeader 
+          currentChatId={currentChatId}
+          currentChatName={currentChatName} 
+          />
+
+
           {msgLoading ? (
             <Loading></Loading>
           ) : (
