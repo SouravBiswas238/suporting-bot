@@ -12,10 +12,10 @@ const CompanyStoreProvider = ({ children }) => {
     //get user data with auth
     const [data, setData] = useState({});
     const [company, setCompany] = useState([]);
-    const [deleteId, setDeleteID] = useState(Number);
+    const [deleteId, setDeleteID] = useState(0);
     // edit company own data
     const [editData, setEditData] = useState({});
-    const [editId, setEditID] = useState(Number);
+    const [editId, setEditID] = useState(0);
 
     // messge
     const [currentChatId, setCurrentChatId] = useState(Number);
@@ -26,8 +26,12 @@ const CompanyStoreProvider = ({ children }) => {
 
     const saveToken = sessionStorage.getItem("accessToken");
 
+
+
+
     const { isLoading, apiData, apiError } = useFetch('POST', `${serverLink}/company/create`, data);
-    const { status } = useDeleteData('DELETE', `${serverLink}/company/delete/${deleteId}`).apiData;
+    const { isDeleteLoading } = useDeleteData('DELETE', `${serverLink}/company/delete/${deleteId}`,);
+
 
     // update company own data
     const { updatedData } = useUpdate('PATCH', `${serverLink}/company/update/${editId}`, editData);
@@ -47,7 +51,7 @@ const CompanyStoreProvider = ({ children }) => {
                 // Handle the error
                 console.error(error);
             });
-    }, [saveToken, apiData, status, updatedData])
+    }, [saveToken, apiData, isDeleteLoading, updatedData])
 
     // user auth context
     const [loginUser, setLoginUser] = useState(false)
@@ -70,10 +74,12 @@ const CompanyStoreProvider = ({ children }) => {
         saveToken,
         company,
         setData,
+        data,
         setDeleteID,
         setEditID,
         updatedData,
         isLoading,
+        isDeleteLoading,
         apiError,
         loginUser,
         setLoginUser,

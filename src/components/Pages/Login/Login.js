@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
 import googleLogo from '../../../images/google.png';
@@ -7,10 +7,9 @@ import Lottie from 'lottie-web';
 import loginLottie from './login2.json';
 import './Login.css';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import { serverLink } from '../../../utilities/links';
 import Loading from '../../Shared/Loading';
-import { CompanyStore, useCompanyStore } from '../../../stateManagement/CompanyStore';
+import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 // import loginLottie from './login-lottie.json'
 
 const Login = () => {
@@ -30,8 +29,8 @@ const Login = () => {
     // More logic goes here
   }, []);
 
-  const location = useLocation();
-  const from = location?.state?.from?.pathname || '/';
+  // const location = useLocation();
+  // const from = location?.state?.from?.pathname || '/';
 
   const [loading, setLoading] = useState(false);
   const [customError, setCustomError] = useState('');
@@ -60,7 +59,7 @@ const Login = () => {
     try {
       // Post data to the API
       const response = await axios.post(`${serverLink}/account/login/`, formData);
-      console.log(response)
+      // console.log(response)
       response && setLoading(false)
       // Save access token in session storage 7nuwNVeeDh*@74
       const { key } = response.data;
@@ -238,7 +237,7 @@ const Login = () => {
                 }}
                 ref={anime}
               ></div>
-              
+
             </div>
           </div>
         </div>

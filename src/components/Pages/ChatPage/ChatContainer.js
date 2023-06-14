@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import Chatinput from './Chatinput';
-import { FaEllipsisV, FaUserCircle } from 'react-icons/fa';
 import { serverLink, socketLink } from './../../../utilities/links';
 import Lottie from 'lottie-web';
 import lottieData from './27649-lets-chat.json';
@@ -114,9 +113,9 @@ const ChatContainer = () => {
       {currentChatId !== 0 && (
         <div>
           {/* chat header */}
-          <ChatContainerHeader 
-          currentChatId={currentChatId}
-          currentChatName={currentChatName} 
+          <ChatContainerHeader
+            currentChatId={currentChatId}
+            currentChatName={currentChatName}
           />
 
 

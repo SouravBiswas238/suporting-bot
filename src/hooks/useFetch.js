@@ -8,10 +8,15 @@ const useFetch = (method, url, body) => {
     const saveToken = sessionStorage.getItem("accessToken");
 
 
+
     useEffect(() => {
         setIsLoading(true);
         const fetchData = async () => {
             try {
+                if (Object.keys(body)?.length === 0) {
+                    setIsLoading(false);
+                    return
+                }
                 const response = await axios({
                     method: method,
                     url: url,
@@ -33,7 +38,7 @@ const useFetch = (method, url, body) => {
         if (body) {
             fetchData();
         }
-    }, [url, method, body]);
+    }, [url, method, body, saveToken]);
 
     return { isLoading, apiData, apiError };
 };

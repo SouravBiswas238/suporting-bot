@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { serverLink } from '../../../../utilities/links';
 import SingleArticle from './SingleArticle';
 

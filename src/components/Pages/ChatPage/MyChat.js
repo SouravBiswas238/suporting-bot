@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SingleProfile from './SingleProfile';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Loading from '../../Shared/Loading';
 import axios from 'axios';
 import { serverLink } from '../../../utilities/links';
 import { useParams } from 'react-router-dom'
+import { FaSearch } from 'react-icons/fa';
+import FileDownload from './miniComponent/FileDownload';
 
 
 const MyChat = () => {
@@ -42,12 +42,13 @@ const MyChat = () => {
       {/* My contacts header start*/}
       <div className="flex justify-between  my-border rounded">
         <h2 className="text-3xl lg:px-2 mt-1 font-bold ">My Chats</h2>
+        {/* <FileDownload fileName="document.pdf" /> */}
         <div className="drawer-content text-right text-black">
           <label
             for="my-drawer"
             className="m-2 btn-sm btn my-border hover:bg-sky-400  bg-sky-500 text-white"
           >
-            <FontAwesomeIcon icon={faSearch} />{' '}
+            <FaSearch />{' '}
             <span className=" px-2"> Search Chat</span>
           </label>
         </div>

@@ -17,6 +17,7 @@ import AiSalesBot from './AdminDashboard/Products/AiSalesBot';
 import ChatPage from './components/Pages/ChatPage/ChatPage';
 import { CompanyStore } from './stateManagement/CompanyStore';
 import AuthContextProvider from './stateManagement/AuthContext';
+import About from './components/Pages/Home/About/About';
 
 function App() {
 
@@ -28,6 +29,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+
+          <Route path="/aboutUS" element={<About />} />
           <Route path="/chat/:id" element={<ChatPage />} />
           <Route path="/register" element={<Register />} />
 

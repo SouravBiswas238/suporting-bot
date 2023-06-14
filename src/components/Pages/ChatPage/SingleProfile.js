@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 
@@ -32,7 +32,7 @@ const SingleProfile = ({ contact }) => {
                 {contact?.customer}
               </h2>
 
-           
+
             </div>
 
             <p className="font-bold text-sm">

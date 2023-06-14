@@ -8,7 +8,7 @@ import { MdDarkMode } from "react-icons/md";
 // react icon import links 
 import { FaHouseUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { BsPlusLg, BsTools, BsInfoCircleFill, BsFillFileEarmarkMedicalFill } from "react-icons/bs";
+import { BsPlusLg, BsInfoCircleFill, BsFillFileEarmarkMedicalFill } from "react-icons/bs";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
@@ -18,7 +18,7 @@ import { CgProfile } from "react-icons/cg";
 import { Link } from 'react-router-dom';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { useContext } from 'react';
-import { CompanyStore, useCompanyStore } from '../../../stateManagement/CompanyStore';
+import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 
 const Navbar = () => {
     const [colorTheme, setTheme] = useDarkMode()

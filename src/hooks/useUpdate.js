@@ -6,12 +6,18 @@ const useUpdate = (method, url, body) => {
     const [updatedData, setUpdatedData] = useState([]);
     const [apiError, setApiError] = useState('');
     const saveToken = sessionStorage.getItem("accessToken");
+    const parts = url.split('/');
+    const lastNumber = parseInt(parts[parts.length - 1]);
+
 
 
     useEffect(() => {
         setIsLoading(true);
         const fetchData = async () => {
             try {
+                if (!lastNumber) {
+                    return
+                }
                 const response = await axios({
                     method: method,
                     url: url,
@@ -34,7 +40,7 @@ const useUpdate = (method, url, body) => {
             fetchData();
         }
         fetchData();
-    }, [url, method, body]);
+    }, [url, method, body, lastNumber, saveToken]);
 
     return { isLoading, updatedData, apiError };
 };

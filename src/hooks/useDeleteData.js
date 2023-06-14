@@ -2,16 +2,26 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useDeleteData = (method, url, body) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [apiData, setApiData] = useState([]);
+    const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+    const [apiDeleteData, setApiDeleteData] = useState([]);
     const [apiError, setApiError] = useState('');
     const saveToken = sessionStorage.getItem("accessToken");
 
+    const parts = url.split('/');
+    const lastNumber = parseInt(parts[parts.length - 1]);
+
+
+
 
     useEffect(() => {
-        setIsLoading(true);
+        setIsDeleteLoading(true);
         const fetchData = async () => {
             try {
+
+                if (!lastNumber) {
+                    setIsDeleteLoading(false);
+                    return
+                }
                 const response = await axios({
                     method: method,
                     url: url,
@@ -22,21 +32,19 @@ const useDeleteData = (method, url, body) => {
                 });
                 const data = await response;
 
-                setApiData(data);
-                setIsLoading(false);
+                setApiDeleteData(data);
+                setIsDeleteLoading(false);
             } catch (error) {
                 setApiError(error);
-                setIsLoading(false);
+                setIsDeleteLoading(false);
             }
         };
 
-        if (body) {
-            fetchData();
-        }
         fetchData();
-    }, [url, method, body]);
 
-    return { isLoading, apiData, apiError };
+    }, [url, method, body, saveToken, lastNumber]);
+
+    return { isDeleteLoading, apiDeleteData, apiError };
 };
 
 export default useDeleteData;

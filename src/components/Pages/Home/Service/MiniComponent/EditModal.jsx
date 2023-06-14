@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCompanyStore } from '../../../../../stateManagement/CompanyStore';
 import { toast } from 'react-toastify';
-import Loading from '../../../../Shared/Loading';
 
 
-const EditModal = ({ singleCompany, isOpen, onClose }) => {
+
+const EditModal = ({ singleCompany, isOpenEdit, handleCloseEditModal }) => {
     const {
         register,
         formState: { errors },
@@ -15,7 +15,7 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
     } = useForm();
 
 
-    const { setEditData, updatedData, isLoading, apiError } = useContext(useCompanyStore);
+    const { setEditData, updatedData, isLoading } = useContext(useCompanyStore);
 
     const onSubmit = async (data) => {
 
@@ -24,7 +24,7 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
 
         if (updatedData.status === 200) {
             toast.success("Data updated successfully");
-            onClose();
+            handleCloseEditModal();
         }
     }
     useEffect(() => {
@@ -38,16 +38,15 @@ const EditModal = ({ singleCompany, isOpen, onClose }) => {
     }, [singleCompany, setValue]);
 
     if (isLoading) {
-        onClose()
-        return <Loading />
+        handleCloseEditModal()
     }
 
 
     return (
-        <div className={` z-10 mx-5 rounded-lg absolute w-[70%]  bg-white dark:bg-[#182133]  transition-all duration-500 shadow-lg dark:text-gray-100  ${isOpen ? 'block' : 'hidden'}`}>
+        <div className={` z-10 mx-5 rounded-lg absolute w-[70%]  bg-white dark:bg-[#182133]  transition-all duration-500 shadow-lg dark:text-gray-100  ${isOpenEdit ? 'block' : 'hidden'}`}>
             <div className='relative mt-5'>
                 {/* Your modal content here */}
-                <label onClick={onClose} className="dark:text-[#E2E8F0]  flex items-center justify-center border-2 border-primary text-2xl btn-circle absolute right-2 top-0">✕</label>
+                <label onClick={handleCloseEditModal} className="dark:text-[#E2E8F0]  flex items-center justify-center border-2 border-primary text-2xl btn-circle absolute right-2 top-0">✕</label>
                 <h2 className="text-2xl font-semibold dark:text-[#E2E8F0] text-center ">Edit the form for {singleCompany?.name}</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>

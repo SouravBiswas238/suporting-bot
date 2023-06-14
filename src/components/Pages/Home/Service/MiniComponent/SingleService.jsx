@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import ThreeDotComponent from '../../../../../AdminDashboard/Products/MiniComponent/ThreeDotComponent';
 import { FaComment } from 'react-icons/fa';
 
-const SingleService = ({ id, name, whatsapp_number,handleOpenEditModal }) => {
+const SingleService = ({ id, name, whatsapp_number, handleOpenEditModal }) => {
 
-    
+
     return (
         <div className='m-2 p-5 py-6 shadow-lg w-1/4  relative service-item dark:bg-[#182133] transition-all duration-500'>
             <div className='mb-[1rem] absolute top-3 right-2 text-[#061835] dark:text-[#38BDF8]'>

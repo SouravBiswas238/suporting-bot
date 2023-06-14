@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai'
 import EditModal from '../../components/Pages/Home/Service/MiniComponent/EditModal';
 import Modal from '../../components/Pages/Home/Service/MiniComponent/Modal';
 import SingleService from '../../components/Pages/Home/Service/MiniComponent/SingleService';
+import Loading from '../../components/Shared/Loading';
 import { useCompanyStore } from '../../stateManagement/CompanyStore';
 import { serverLink } from '../../utilities/links';
 
@@ -14,8 +15,11 @@ const AiSalesBot = () => {
     const [singleCompany, setSingleCompany] = useState({});
 
 
+    const { saveToken, setEditID, isLoading, isDeleteLoading, apiError } = useContext(useCompanyStore);
     const company = useContext(useCompanyStore)?.company;
-    const { saveToken, setEditID, updatedData } = useContext(useCompanyStore);
+
+
+    console.log(company)
 
     const handleOpenModal = () => {
         setIsOpen(true);
@@ -44,10 +48,27 @@ const AiSalesBot = () => {
         }
     };
 
-    // console.log(updatedData)
-    // if (updatedData) {
-    //     toast.success("data edited successfully");
-    // }
+
+    let content = null;
+    if (isLoading || isDeleteLoading) {
+        return <Loading />;
+
+    }
+    if (!isLoading && apiError) {
+        content = <h1>Error</h1>;
+    }
+
+    if (!isLoading && company.length !== 0) {
+        content = company?.map((single) =>
+            <SingleService key={single?.id}
+                id={single?.id}
+                name={single?.name}
+                handleOpenEditModal={handleOpenEditModal}
+                whatsapp_number={single?.whatsapp_number} />
+        )
+
+
+    }
 
     return (
         <div className=''>
@@ -60,18 +81,12 @@ const AiSalesBot = () => {
             </div>
 
             <div className='relative top-10'>
-                <EditModal singleCompany={singleCompany} isOpen={isOpenEdit} onClose={handleCloseEditModal} />
+                <EditModal singleCompany={singleCompany} isOpenEdit={isOpenEdit} handleCloseEditModal={handleCloseEditModal} />
             </div>
             {/* show single curd */}
             <div className=' flex flex-wrap justify-start'>
                 {
-                    company?.map((single) =>
-                        <SingleService key={single.id}
-                            id={single?.id}
-                            name={single?.name}
-                            handleOpenEditModal={handleOpenEditModal}
-                            whatsapp_number={single?.whatsapp_number} />
-                    )
+                    content
                 }
 
             </div>

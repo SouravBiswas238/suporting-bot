@@ -16,9 +16,6 @@ const ThreeDotComponent = ({ id, handleOpenEditModal }) => {
     setDeleteID(singId)
   };
 
-
-
-
   return (
     <div className='relative'>
       <div onClick={toggleMenu}>

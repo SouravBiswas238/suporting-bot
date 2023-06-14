@@ -12,13 +12,13 @@ const Modal = ({ isOpen, onClose }) => {
         reset
     } = useForm();
 
-    const { setData, isLoading, apiData, apiError } = useContext(useCompanyStore);
+    const { setData, data, isLoading } = useContext(useCompanyStore);
     if (isLoading) {
-        onClose()
         return <Loading />
     }
-    if (apiData) {
-        console.log(apiData)
+
+    if (Object.keys(data)?.length !== 0) {
+        onClose()
     }
 
     const onSubmit = async (data) => {
@@ -26,24 +26,7 @@ const Modal = ({ isOpen, onClose }) => {
         reset();
     }
 
-    // let content = "";
-    // if (isLoading || isFetching) {
-    //   content = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((key) => (
-    //     <SingleProductCartLoading key={key} />
-    //   ));
-    // } else if (!isLoading && !isFetching && isError) {
-    //   content = <div>is Error</div>;
-    // } else if (
-    //   !isLoading &&
-    //   !isFetching &&
-    //   !isError &&
-    //   allProducts?.length === 0
-    // ) {
-    //   content = <div>No Product Found</div>;
-    // } else {
-    //   content = allProducts?.data?.map((product, key) => (
-    //     <SingleProductCart key={key} product={product} />
-    //   ));
+
     return (
         <div className={` z-10 mx-5 rounded-lg absolute w-[70%]  bg-white dark:bg-[#182133]  transition-all duration-500 shadow-lg dark:text-gray-100  ${isOpen ? 'block' : 'hidden'}`}>
             <div className='relative mt-5'>
