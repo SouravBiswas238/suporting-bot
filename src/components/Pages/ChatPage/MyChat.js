@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SingleProfile from './SingleProfile';
 import Loading from '../../Shared/Loading';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import { serverLink } from '../../../utilities/links';
 import { useParams } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa';
 import FileDownload from './miniComponent/FileDownload';
+import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 
 
 const MyChat = () => {
@@ -14,6 +15,8 @@ const MyChat = () => {
 
   // get id from params
   let { id } = useParams();
+  const { currentChatId, currentChatName, activeBot } = useContext(useCompanyStore);
+
 
 
   useEffect(() => {
@@ -33,9 +36,9 @@ const MyChat = () => {
     };
 
     fetchContacts();
-  }, [id]);
+  }, [id, saveToken, activeBot]);
 
-
+  // console.log(contracts)
 
   return (
     <div className="lg:mx-2 pt-2">

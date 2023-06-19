@@ -8,6 +8,7 @@ import Loading from '../../Shared/Loading';
 import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 import { animateScroll } from 'react-scroll';
 import ChatContainerHeader from './miniComponent/ChatContainerHeader';
+import FileDownload from './miniComponent/FileDownload';
 
 const ChatContainer = () => {
   const saveToken = sessionStorage.getItem("accessToken");
@@ -16,7 +17,7 @@ const ChatContainer = () => {
   const [arrivalMessage, setArrivalMessage] = useState([]);
   const messageContainerRef = useRef(null);
 
-
+  // onclick scroll to bottom in the msg
   const scrollToBottom = () => {
     animateScroll.scrollToBottom({
       containerId: 'messageContainer',
@@ -32,7 +33,7 @@ const ChatContainer = () => {
 
 
   // from context
-  const { currentChatId, currentChatName } = useContext(useCompanyStore);
+  const { currentChatId, currentChatName, activeBot } = useContext(useCompanyStore);
 
   useEffect(() => {
     const fetchChatMessages = async () => {
@@ -81,8 +82,10 @@ const ChatContainer = () => {
     if (currentChatId) {
       socket.current = new WebSocket(`${socketLink}/${currentChatId}/?token=${saveToken}`);
 
+
       socket.current.onmessage = function (e) {
         const data = JSON.parse(e.data);
+        console.log("data=>", data)
         const sender = data?.sender;
         const bot_message = data?.message;
         setArrivalMessage(prevArrivalMessages => [...prevArrivalMessages, { bot_message, sender }]);
@@ -100,7 +103,10 @@ const ChatContainer = () => {
   const handleSendMsg = async (msg) => {
     if (socket.current) {
       socket.current.send(JSON.stringify({
-        'message': msg,
+        "message": {
+          "type": "text",
+          "text": msg
+        },
         'sender': 'bot',
       }));
     }
@@ -108,6 +114,7 @@ const ChatContainer = () => {
   // for message sorting to the update date
   messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at));
 
+  // console.log(messages);
   return (
     <div className="w-100">
       {currentChatId !== 0 && (
@@ -116,6 +123,7 @@ const ChatContainer = () => {
           <ChatContainerHeader
             currentChatId={currentChatId}
             currentChatName={currentChatName}
+            activeBot={activeBot}
           />
 
 
@@ -151,13 +159,19 @@ const ChatContainer = () => {
                 {arrivalMessage?.map((message) => {
                   return (
                     <div>
-                      {message?.sender && (
-                        <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
+                      {
+                        message?.bot_message?.type === 'text' ? (
+                          <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
+                            <div className="content">
+                              <p>{message?.bot_message?.text}</p>
+                            </div>
+                          </div>
+                        ) : <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
                           <div className="content">
-                            <p>{message?.bot_message}</p>
+                            <FileDownload fileName={"file.pdf"} />
                           </div>
                         </div>
-                      )}
+                      }
                     </div>
                   );
                 })}

@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { serverLink } from '../../../../utilities/links';
 import axios from 'axios';
 import Switch from 'react-switch';
 
 
-const ChatHeaderModel = ({ isOpen, onClose, currentChatId }) => {
-    const [isOn, setIsOn] = useState(false);
+
+const ChatHeaderModel = ({ isOpen, onClose, currentChatId, activeBot }) => {
+
+    const [isOn, setIsOn] = useState(activeBot);
+
+    useEffect(() => {
+        setIsOn(activeBot);
+    }, [activeBot]);
 
     if (!isOpen) return false;
     const saveToken = sessionStorage.getItem("accessToken");
 
     const handleToggle = () => {
-        setIsOn(!isOn);
+        const updatedValue = !isOn;
+        setIsOn(updatedValue);
 
         // Call API based on state
-        if (!isOn) {
-            // Call API for "Off" state
-            callOffApi();
-        } else {
+        if (updatedValue) {
             // Call API for "On" state
             callOnApi();
+        } else {
+            // Call API for "Off" state
+            callOffApi();
         }
     };
 
@@ -35,21 +42,13 @@ const ChatHeaderModel = ({ isOpen, onClose, currentChatId }) => {
             }
         });
         const data1 = await response;
+        // console.log(data1.data)
 
     };
 
     const callOnApi = async () => {
         const data = { active_bot: false }
-        // try {
-        //     const response = await axios.patch(`${serverLink}/chat/chatroom/${currentChatId}`, { data }, {
-        //         headers: {
-        //             'Authorization': 'Token ' + saveToken,
-        //         },
-        //     });
-        //     console.log(response?.data?.results);
-        // } catch (error) {
-        //     console.error(error);
-        // }
+
         const response = await axios({
             method: "PATCH",
             url: `${serverLink}/chat/chatroom/update/${currentChatId}`,
@@ -59,6 +58,8 @@ const ChatHeaderModel = ({ isOpen, onClose, currentChatId }) => {
             }
         });
         const data2 = await response;
+        // console.log(data2.data)
+
     };
 
     return (
@@ -81,6 +82,8 @@ const ChatHeaderModel = ({ isOpen, onClose, currentChatId }) => {
                     </button>
                 </div>
             </div>
+
+           
         </div>
     );
 };

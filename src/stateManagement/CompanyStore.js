@@ -20,7 +20,7 @@ const CompanyStoreProvider = ({ children }) => {
     // messge
     const [currentChatId, setCurrentChatId] = useState(Number);
     const [currentChatName, setCurrentChatName] = useState('');
-
+    const [activeBot, setActiveBot] = useState(false);
 
 
 
@@ -85,6 +85,8 @@ const CompanyStoreProvider = ({ children }) => {
         setLoginUser,
         setCurrentChatId,
         setCurrentChatName,
+        setActiveBot,
+        activeBot,
         currentChatId,
         currentChatName,
         setEditData

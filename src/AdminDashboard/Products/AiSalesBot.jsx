@@ -19,7 +19,6 @@ const AiSalesBot = () => {
     const company = useContext(useCompanyStore)?.company;
 
 
-    console.log(company)
 
     const handleOpenModal = () => {
         setIsOpen(true);

@@ -7,18 +7,19 @@ import { useCompanyStore } from '../../../stateManagement/CompanyStore';
 const SingleProfile = ({ contact }) => {
 
 
-  const { setCurrentChatId, setCurrentChatName } = useContext(useCompanyStore);
+  const { setCurrentChatId, setCurrentChatName,setActiveBot } = useContext(useCompanyStore);
 
 
-  const singleUserSelect = async (contactId, contactName) => {
+  const singleUserSelect = async (contactId, contactName,activeBot) => {
     setCurrentChatId(contactId)
     setCurrentChatName(contactName);
+    setActiveBot(activeBot)
 
   };
 
   return (
     <div for="my-modal-3" className=" ">
-      <div onClick={() => singleUserSelect(contact?.id, contact?.customer)} className="my-2 cursor-pointer lg:flex justify-between rounded my-border bg-sky-50 hover:bg-sky-100">
+      <div onClick={() => singleUserSelect(contact?.id, contact?.customer,contact?.active_bot)} className="my-2 cursor-pointer lg:flex justify-between rounded my-border bg-sky-50 hover:bg-sky-100">
         <div className="flex justify-start items-center">
           <div className="avatar p-2 ">
             <div className="w-[40px] rounded-full">

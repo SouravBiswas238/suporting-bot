@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
 import ChatHeaderModel from './ChatHeaderModel';
 
-const ChatContainerHeader = ({ currentChatName, currentChatId }) => {
+const ChatContainerHeader = ({ currentChatName, currentChatId,activeBot }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -12,7 +12,9 @@ const ChatContainerHeader = ({ currentChatName, currentChatId }) => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
+    useEffect(() => {
+        setIsModalOpen(false); // Close the modal when currentChatId changes
+    }, [currentChatId]);
     return (
 
         <div className="relative ">
@@ -25,7 +27,7 @@ const ChatContainerHeader = ({ currentChatName, currentChatId }) => {
                     <FaEllipsisV className="w-5 h-5" />
                 </button>
             </div>
-            <ChatHeaderModel currentChatId={currentChatId} isOpen={isModalOpen} onClose={closeModal} />
+            <ChatHeaderModel activeBot={activeBot} currentChatId={currentChatId} isOpen={isModalOpen} onClose={closeModal} />
 
         </div>
     );
