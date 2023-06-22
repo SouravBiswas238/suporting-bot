@@ -80,8 +80,8 @@ const ChatPage = () => {
 
                         <div>
                             {
-                                searchResult ? "Search your Chat" ? searchResult?.map((chat) => <SingleProfile
-                                    key={chat?._id}
+                                searchResult ? "Search your Chat" ? searchResult?.map((chat, index) => <SingleProfile
+                                    key={index}
                                     setCurrentChatId={setCurrentChatId}
                                     chat={chat} />) : <Loading></Loading> : <Loading></Loading>
                             }

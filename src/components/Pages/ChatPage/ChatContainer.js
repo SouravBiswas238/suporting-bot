@@ -133,9 +133,9 @@ const ChatContainer = () => {
             <>
               {/* chat body */}
               <div id="messageContainer" ref={messageContainerRef} className="message-body overflow-x-hidden overflow-y-auto h-[calc(100vh-240px)]">
-                {messages?.map((message) => {
+                {messages?.map((message, index) => {
                   return (
-                    <div>
+                    <div key={index}>
                       {message?.customer_message && (
                         <div
                           className={`message ${message?.customer_message ? 'recieved' : 'sended'}`}

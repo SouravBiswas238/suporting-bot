@@ -51,7 +51,7 @@ const CompanyStoreProvider = ({ children }) => {
                 // Handle the error
                 console.error(error);
             });
-    }, [saveToken, apiData, isDeleteLoading, updatedData])
+    }, [saveToken, apiData, isDeleteLoading, updatedData, activeBot])
 
     // user auth context
     const [loginUser, setLoginUser] = useState(false)
