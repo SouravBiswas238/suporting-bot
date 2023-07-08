@@ -82,7 +82,6 @@ const ChatContainer = () => {
     if (currentChatId) {
       socket.current = new WebSocket(`${socketLink}/${currentChatId}/?token=${saveToken}`);
 
-
       socket.current.onmessage = function (e) {
         const data = JSON.parse(e.data);
         console.log("data=>", data)
@@ -114,7 +113,8 @@ const ChatContainer = () => {
   // for message sorting to the update date
   messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at));
 
-  // console.log(messages);
+
+
   return (
     <div className="w-100">
       {currentChatId !== 0 && (
@@ -142,6 +142,19 @@ const ChatContainer = () => {
                         >
                           <div className="content">
                             <p>{message?.customer_message}</p>
+                          </div>
+                        </div>
+                      )}
+                      {message?.customer_media_message && (
+                        <div
+                          className={` ${message?.customer_media_message ? 'recieved' : 'sended'}`}
+                        >
+                          <div className="content !bg-gray-700  rounded shadow-md ">
+                            <FileDownload
+                              fileType={message?.customer_media_message?.type}
+                              mediaId={message?.customer_media_message?.media_id}
+                              fileName={message?.customer_media_message?.name} />
+
                           </div>
                         </div>
                       )}
