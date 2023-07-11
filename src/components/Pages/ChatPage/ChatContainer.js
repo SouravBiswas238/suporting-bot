@@ -10,6 +10,8 @@ import { animateScroll } from 'react-scroll';
 import ChatContainerHeader from './miniComponent/ChatContainerHeader';
 import FileDownload from './miniComponent/FileDownload';
 
+
+
 const ChatContainer = () => {
   const saveToken = sessionStorage.getItem("accessToken");
   const [messages, setMessages] = useState([]);
@@ -114,6 +116,28 @@ const ChatContainer = () => {
   messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at));
 
 
+  const today = new Date();
+
+  function showTime(timeStr) {
+    const timeObj = new Date(timeStr);
+    const isToday = timeObj.getDate() === today.getDate();
+    const isYesterday = timeObj.getDate() === (today.getDate() - 1);
+    const diffInDays = Math.round((today - timeObj) / (1000 * 60 * 60 * 24));
+
+    if (isToday) {
+      return `${timeObj.toLocaleTimeString().slice(0, -3)}, ${timeObj.toLocaleDateString()} (${timeObj.toLocaleDateString('en-US', { weekday: 'long' })})`;
+    } else if (isYesterday) {
+      return `Yesterday, ${timeObj.toLocaleTimeString().slice(0, -3)}`;
+    } else if (diffInDays <= 7) {
+      return `${timeObj.toLocaleTimeString().slice(0, -3)}, ${timeObj.toLocaleDateString('en-US', { weekday: 'long' })}`;
+    } else {
+      return `${timeObj.toLocaleDateString()} (${timeObj.toLocaleDateString('en-US', { weekday: 'long' })}, ${timeObj.toLocaleTimeString().slice(0, -3)}`;
+    }
+  }
+
+
+
+
 
   return (
     <div className="w-100">
@@ -141,6 +165,8 @@ const ChatContainer = () => {
                           className={`message ${message?.customer_message ? 'recieved' : 'sended'}`}
                         >
                           <div className="content">
+                            <span class="tooltiptext">{showTime(message?.updated_at)}</span>
+
                             <p>{message?.customer_message}</p>
                           </div>
                         </div>
@@ -150,6 +176,8 @@ const ChatContainer = () => {
                           className={` ${message?.customer_media_message ? 'recieved' : 'sended'}`}
                         >
                           <div className="content !bg-gray-700  rounded shadow-md ">
+                            <span class="tooltiptext">{showTime(message?.updated_at)}</span>
+
                             <FileDownload
                               fileType={message?.customer_media_message?.type}
                               mediaId={message?.customer_media_message?.media_id}
@@ -159,8 +187,11 @@ const ChatContainer = () => {
                         </div>
                       )}
                       {message?.bot_message && (
+
                         <div className={`message ${message?.bot_message ? 'sended' : 'recieved'}`}>
                           <div className="content">
+
+                            <span class="tooltiptext">{showTime(message?.updated_at)}</span>
                             <p>{message?.bot_message}</p>
                           </div>
                         </div>
@@ -176,11 +207,13 @@ const ChatContainer = () => {
                         message?.bot_message?.type === 'text' ? (
                           <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
                             <div className="content">
+                              <span class="tooltiptext">{showTime(message?.updated_at)}</span>
                               <p>{message?.bot_message?.text}</p>
                             </div>
                           </div>
                         ) : <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
                           <div className="content">
+                            <span class="tooltiptext">{showTime(message?.updated_at)}</span>
                             <FileDownload fileName={"file.pdf"} />
                           </div>
                         </div>

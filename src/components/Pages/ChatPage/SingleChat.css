@@ -27,12 +27,43 @@
     max-width: 40%;
     overflow-wrap: break-word;
     padding: 1rem;
-    margin: 3px;
+    margin: 3px 3px;
     font-size: 1.1rem;
     border-radius: 0.4rem;
     color: #ffffff;
+    position: relative;
+    display: inline-block;
+
 }
 
+/* Tooltip text */
+.content .tooltiptext {
+    visibility: hidden;
+    background-color: #263238;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    color: #fff;
+    border-radius: 4px;
+    position: absolute;
+    padding: 2px 4px;
+    z-index: 1;
+    margin: 0px 4px;
+    top: 0;
+    width: 150px;
+    text-align: center;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.sended .content:hover .tooltiptext {
+    visibility: visible;
+    right: 100%;
+
+}
+
+.recieved .content:hover .tooltiptext {
+    visibility: visible;
+    left: 100%;
+
+}
 
 .sended {
     justify-content: flex-end;

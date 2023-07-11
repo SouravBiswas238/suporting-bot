@@ -39,6 +39,8 @@ const MyChat = () => {
   }, [id, saveToken, activeBot]);
 
   // console.log(contracts)
+  contracts?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at));
+
 
   return (
     <div className="lg:mx-2 pt-2">
