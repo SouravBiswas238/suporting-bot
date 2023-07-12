@@ -2,4 +2,4 @@
 // export const serverLink = `http://aisalesteams.com`
 export const serverLink = `https://aisalesteams.com`
 
-export const socketLink = `ws://aisalesteams.com/ws/chat`
+export const socketLink = `wss://aisalesteams.com/ws/chat`
