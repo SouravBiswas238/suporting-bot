@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa';
 import FileDownload from './miniComponent/FileDownload';
 import { useCompanyStore } from '../../../stateManagement/CompanyStore';
+import SearchNewChat from './miniComponent/SearchNewChat';
+import ContractsHeader from './miniComponent/ContractsHeader';
 
 
 const MyChat = () => {
@@ -43,22 +45,13 @@ const MyChat = () => {
 
 
   return (
-    <div className="lg:mx-2 pt-2">
+    <div className="lg:ms-2 pt-0 bg-white">
       {/* My contacts header start*/}
-      <div className="flex justify-between  my-border rounded">
-        <h2 className="text-3xl lg:px-2 mt-1 font-bold ">My Chats</h2>
-        {/* <FileDownload fileName="document.pdf" /> */}
-        <div className="drawer-content text-right text-black">
-          <label
-            for="my-drawer"
-            className="m-2 btn-sm btn my-border hover:bg-sky-400  bg-sky-500 text-white"
-          >
-            <FaSearch />{' '}
-            <span className=" px-2"> Search Chat</span>
-          </label>
-        </div>
+      <div className='sticky top-0 bg-white z-40'>
+
+        <ContractsHeader />
+        <SearchNewChat />
       </div>
-      {/*My contracts header end*/}
 
       {/* load all contacts  */}
       <div className="overflow-x-hidden  overflow-y-auto ">

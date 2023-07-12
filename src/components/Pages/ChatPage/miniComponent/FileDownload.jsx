@@ -24,9 +24,7 @@ const FileDownload = ({ fileName, fileType, mediaId }) => {
                 })
                 .then((response) => {
                     // Determine the file type based on the "fileType" prop
-
                     console.log(response)
-
                     // Create a temporary URL object from the response data
                     const fileURL = window.URL.createObjectURL(new Blob([response.data], { type: response?.data?.type }));
 

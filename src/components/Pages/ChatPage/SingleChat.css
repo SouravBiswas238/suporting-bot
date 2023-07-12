@@ -11,12 +11,16 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 
 .chat-background {
+    font-family: "Open Sans", sans-serif;
     background-image: linear-gradient(90deg, rgba(88, 86, 233, 0.11) 0%, rgba(0, 208, 156, 0.146) 100%);
+    background: url(../../../images/whatsappBg.png);
 }
 
 .my-border {
     border: 1px solid rgba(88, 86, 233, .2);
 }
+
+
 
 .message {
     display: flex;
@@ -39,12 +43,11 @@
 /* Tooltip text */
 .content .tooltiptext {
     visibility: hidden;
-    background-color: #263238;
+    background-color: #C3CACF;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     color: #fff;
     border-radius: 4px;
     position: absolute;
-    padding: 2px 4px;
     z-index: 1;
     margin: 0px 4px;
     top: 0;
@@ -70,7 +73,8 @@
 }
 
 .sended .content {
-    background-color: #0358a2dc;
+    background-color: #D9FDD3;
+    color: #111B21;
 }
 
 .recieved {
@@ -78,7 +82,9 @@
 }
 
 .recieved .content {
-    background-color: #3700ff99;
+    background-color: #FFFFFF;
+    color: #111B21;
+
 }
 
 .joinChatContainer {

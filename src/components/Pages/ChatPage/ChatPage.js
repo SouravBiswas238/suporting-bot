@@ -46,6 +46,7 @@ const ChatPage = () => {
                         <div className="h-[calc(100vh-130px)] carousel carousel-vertical ">
 
                             <div className=''>
+
                                 <MyChat ></MyChat>
                             </div>
 

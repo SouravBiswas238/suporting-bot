@@ -68,7 +68,7 @@ const Login = () => {
       // Save access token in session storage
       sessionStorage.setItem("accessToken", key);
       // Perform additional actions after successful login, if needed
-      response.status === 200 && navigate('/');
+      response.status === 200 && navigate('/user-dashboard/aiSalesBot');
 
     } catch (error) {
       error && setLoading(false);
