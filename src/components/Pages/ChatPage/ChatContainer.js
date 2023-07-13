@@ -110,11 +110,9 @@ const ChatContainer = () => {
       }));
     }
   };
+
   // for message sorting to the update date
   messages?.sort((a, b) => new Date(a?.updated_at) - new Date(b?.updated_at));
-
-
-
 
   const formateDate = (dateString) => {
     const currentDate = new Date();
@@ -132,15 +130,19 @@ const ChatContainer = () => {
     } else {
       return date.toLocaleString([], { weekday: 'long', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     }
-
   };
+
   const msgTime = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
   };
 
-
+  const handleDownload = (mediaId) => {
+    const link = document.createElement('a');
+    link.href = `https://aisalesteams.com/message/media/${mediaId}`;
+    link.download = 'image.jpg';
+    link.click();
+  };
 
   return (
     <div className="w-100">
@@ -152,7 +154,6 @@ const ChatContainer = () => {
             currentChatName={currentChatName}
             activeBot={activeBot}
           />
-
 
           {msgLoading ? (
             <Loading></Loading>
@@ -168,37 +169,37 @@ const ChatContainer = () => {
                           className={`message ${message?.customer_message ? 'recieved' : 'sended'}`}
                         >
                           <div className="content">
-                            <span class="tooltiptext">{formateDate(message?.updated_at)}</span>
-
-                            <p>{message?.customer_message}</p>
-                            <p className='text-[11px] text-right my-0 pt-1'>{msgTime(message?.updated_at)}</p>
-
+                            <span className="tooltiptext">{formateDate(message?.updated_at)}</span>
+                            <p className="p-2 pb-0">{message?.customer_message}</p>
+                            <p className="text-[11px] px-2 text-right my-0 pt-1">{msgTime(message?.updated_at)}</p>
                           </div>
                         </div>
                       )}
                       {message?.customer_media_message && (
                         <div
-                          className={` ${message?.customer_media_message ? 'recieved' : 'sended'}`}
+                          className={`message ${message?.customer_media_message ? 'recieved' : 'sended'}`}
                         >
-                          <div className="content !bg-gray-700  rounded shadow-md ">
-                            <span class="tooltiptext">{formateDate(message?.updated_at)}</span>
+                          <div className="content p-0">
+                            <span className="tooltiptext">{formateDate(message?.updated_at)}</span>
+                            {/* <div onClick={() => handleDownload(message?.customer_media_message?.media_id)}>
+                              
+                              <img src={`https://aisalesteams.com/message/media/${message?.customer_media_message?.media_id}`} alt="W3Schools" />
+                            </div> */}
+                            <a href={`https://aisalesteams.com/message/media/${message?.customer_media_message?.media_id}`} target="_blank" onClick={() => handleDownload(message?.customer_media_message?.media_id)}>
+                              <img src={`https://aisalesteams.com/message/media/${message?.customer_media_message?.media_id}`} alt={message?.customer_media_message?.fileName} />
+                            </a>
 
-                            <FileDownload
-                              fileType={message?.customer_media_message?.type}
-                              mediaId={message?.customer_media_message?.media_id}
-                              fileName={message?.customer_media_message?.name} />
+
+                            <p className="text-[11px] px-2 text-right my-0 pt-1">{msgTime(message?.updated_at)}</p>
                           </div>
-                          <p className='text-[11px] text-right my-0 pt-1'>{msgTime(message?.updated_at)}</p>
                         </div>
                       )}
                       {message?.bot_message && (
-
                         <div className={`message ${message?.bot_message ? 'sended' : 'recieved'}`}>
                           <div className="content">
-
-                            <span class="tooltiptext">{formateDate(message?.updated_at)}</span>
-                            <p>{message?.bot_message}</p>
-                            <p className='text-[11px] text-right my-0 pt-1'>{msgTime(message?.updated_at)}</p>
+                            <span className="tooltiptext">{formateDate(message?.updated_at)}</span>
+                            <p className="p-2 pb-0">{message?.bot_message}</p>
+                            <p className="text-[11px] px-2 text-right my-0 pt-1">{msgTime(message?.updated_at)}</p>
                           </div>
                         </div>
                       )}
@@ -209,23 +210,23 @@ const ChatContainer = () => {
                 {arrivalMessage?.map((message) => {
                   return (
                     <div>
-                      {
-                        message?.bot_message?.type === 'text' ? (
-                          <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
-                            <div className="content">
-                              <span class="tooltiptext">{formateDate(message?.updated_at)}</span>
-                              <p>{message?.bot_message?.text}</p>
-                              <p className='text-[11px] text-right my-0 pt-1'>{msgTime(message?.updated_at)}</p>
-                            </div>
-                          </div>
-                        ) : <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
+                      {message?.bot_message?.type === 'text' ? (
+                        <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
                           <div className="content">
-                            <span class="tooltiptext">{formateDate(message?.updated_at)}</span>
-                            <FileDownload fileName={"file.pdf"} />
-                            <p className='text-[11px] text-right my-0 pt-1'>{msgTime(message?.updated_at)}</p>
+                            <span className="tooltiptext">{formateDate(message?.updated_at)}</span>
+                            <p>{message?.bot_message?.text}</p>
+                            <p className="text-[11px] px-2 text-right my-0 pt-1">{msgTime(message?.updated_at)}</p>
                           </div>
                         </div>
-                      }
+                      ) : (
+                        <div className={`message ${message?.sender === 'bot' ? 'sended' : 'recieved'}`}>
+                          <div className="content">
+                            <span className="tooltiptext">{formateDate(message?.updated_at)}</span>
+                            <FileDownload fileName={message?.bot_message?.fileName} />
+                            <p className="text-[11px] px-2 text-right my-0 pt-1">{msgTime(message?.updated_at)}</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -236,16 +237,13 @@ const ChatContainer = () => {
           <Chatinput handleSendMsg={handleSendMsg} />
         </div>
       )}
-      {/* when not selecting the chat id thek show the section */}
+
+      {/* when not selecting the chat id then show this section */}
       {currentChatId === 0 && (
         <>
           <h2 className="text-center text-3xl my-5 font-bold">Select your Chat</h2>
 
-          <div
-            className="overflow-hidden mx-auto"
-            style={{ height: 400, width: 600 }}
-            ref={anime}
-          ></div>
+          <div className="overflow-hidden mx-auto" style={{ height: 400, width: 600 }} ref={anime}></div>
         </>
       )}
     </div>
